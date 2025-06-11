@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hondaroyalwiyung.com/sitemap.xml
+Sitemap: https://hondaroyal.pages.dev/sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /admin/
@@ -16,4 +16,5 @@ Allow: /*
 # Google Image Crawler Configuration
 User-agent: Googlebot-Image
 Allow: /images/
+Allow: /cars/
 Disallow: /private-images/
