@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hondaroyalwiyung.com/sitemap.xml
+
+# Disallow admin and API routes
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+
+# Allow all other pages
+Allow: /*
+
+# Crawl-delay: 10
+
+# Google Image Crawler Configuration
+User-agent: Googlebot-Image
+Allow: /images/
+Disallow: /private-images/
