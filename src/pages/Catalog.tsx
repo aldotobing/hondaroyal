@@ -21,7 +21,7 @@ const Catalog = () => {
   };
 
   const getCarLowestPrice = (car: any) => {
-    const prices = car.variants.map((variant: any) => 
+    const prices = car.variants.map((variant: any) =>
       parsePrice(variant.promo_price || variant.price)
     );
     return Math.min(...prices);
@@ -29,10 +29,10 @@ const Catalog = () => {
 
   const filteredCars = cars.filter(car => {
     const matchesSearch = car.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         car.category.toLowerCase().includes(searchTerm.toLowerCase());
-    
+      car.category.toLowerCase().includes(searchTerm.toLowerCase());
+
     const matchesCategory = !selectedCategory || car.category === selectedCategory;
-    
+
     let matchesPrice = true;
     if (selectedPriceRange) {
       const range = priceRanges.find(r => r.label === selectedPriceRange);
@@ -143,30 +143,59 @@ const Catalog = () => {
         {filteredCars.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCars.map((car) => (
-              <CarCard key={car.id} car={car} showVariants={true} />
+              <CarCard
+                key={car.id}
+                car={car}
+                showVariants={true}
+              />
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <Search className="w-12 h-12 mx-auto" />
+          <div className="flex flex-col items-center justify-center py-16 px-4">
+            <div className="bg-gray-50 rounded-full p-6 mb-6">
+              <Search className="w-16 h-16 text-gray-400" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">
-              Tidak ada hasil yang ditemukan
-            </h3>
-            <p className="text-gray-500 mb-4">
-              Coba ubah filter pencarian atau kata kunci Anda
-            </p>
-            <button
-              onClick={() => {
-                setSearchTerm('');
-                setSelectedCategory('');
-                setSelectedPriceRange('');
-              }}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200"
-            >
-              Reset Filter
-            </button>
+
+            <div className="text-center max-w-md">
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                Tidak ada hasil yang ditemukan
+              </h3>
+
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                Coba ubah filter pencarian atau kata kunci Anda untuk menemukan
+                kendaraan yang sesuai dengan kebutuhan Anda
+              </p>
+
+              <button
+                onClick={() => {
+                  setSearchTerm('');
+                  setSelectedCategory('');
+                  setSelectedPriceRange('');
+                }}
+                className="group relative bg-gradient-to-r from-red-500 to-red-600 
+                   hover:from-red-600 hover:to-red-700 text-white font-semibold 
+                   px-8 py-3 rounded-xl shadow-lg hover:shadow-xl 
+                   transform hover:-translate-y-0.5 transition-all duration-300 
+                   focus:outline-none focus:ring-4 focus:ring-red-200"
+              >
+                <span className="flex items-center gap-2">
+                  <svg
+                    className="w-5 h-5 transition-transform group-hover:rotate-12"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  Reset Filter
+                </span>
+              </button>
+            </div>
           </div>
         )}
 

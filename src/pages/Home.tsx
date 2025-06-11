@@ -105,7 +105,22 @@ const Home = () => {
     <div>
       {/* Hero Section */}
       <AnimatedSection className="w-full">
-        <section className="relative min-h-screen flex items-center bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden">
+        <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden">
+          {/* Car Image */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-full h-full max-w-[2000px] mx-auto">
+                <img 
+                  src={heroBanners[currentBanner]} 
+                  alt="Honda Showcase" 
+                  className="w-full h-full object-cover object-center scale-110 transition-transform duration-1000 ease-in-out"
+                  style={{ transform: 'scale(1.1) translateY(5%)' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent"></div>
+              </div>
+            </div>
+          </div>
+          
           {/* Dynamic Background Pattern */}
           <div className="absolute inset-0 opacity-30">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(239,68,68,0.3),transparent_50%)]"></div>

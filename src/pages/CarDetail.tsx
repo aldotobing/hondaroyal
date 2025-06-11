@@ -58,47 +58,52 @@ const CarDetail = () => {
   const hasPromo = car.variants.some(variant => variant.promo_price) || car.promo;
 
   return (
-    <div className="py-8 lg:py-12 bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-6 sm:py-8 lg:py-10 bg-gray-50 min-h-screen">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         {/* Breadcrumb */}
-        <div className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <Link to="/katalog" className="hover:text-red-600 flex items-center space-x-1">
-            <ArrowLeft className="w-4 h-4" />
-            <span>Katalog</span>
+        <div className="flex items-center space-x-1.5 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8">
+          <Link to="/katalog" className="hover:text-red-600 flex items-center space-x-1 transition-colors">
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="truncate">Katalog</span>
           </Link>
           <span>/</span>
-          <span className="text-gray-900 font-medium">{car.name}</span>
+          <span className="text-gray-900 font-medium truncate max-w-[200px] sm:max-w-none">{car.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mb-10 sm:mb-12">
           {/* Image Gallery */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg">
+          <div className="lg:col-span-2 space-y-3 sm:space-y-4">
+            <div className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
               <img
                 src={car.images.gallery[selectedImage]}
                 alt={`${car.name} - Image ${selectedImage + 1}`}
-                className="w-full h-96 object-cover"
+                className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="eager"
               />
               {hasPromo && (
-                <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-full font-semibold">
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-gradient-to-r from-red-600 to-red-500 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-bold tracking-wide shadow-lg">
                   PROMO SPESIAL!
                 </div>
               )}
             </div>
             
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 gap-1.5 sm:gap-2">
               {car.images.gallery.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative rounded-lg overflow-hidden aspect-square ${
-                    selectedImage === index ? 'ring-2 ring-red-600' : ''
+                  className={`relative rounded-lg overflow-hidden aspect-square transition-all ${
+                    selectedImage === index 
+                      ? 'ring-2 ring-red-600 scale-[1.02]' 
+                      : 'hover:ring-1 hover:ring-gray-300'
                   }`}
+                  aria-label={`Lihat gambar ${index + 1} dari ${car.images.gallery.length}`}
                 >
                   <img
                     src={image}
                     alt={`${car.name} thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover hover:opacity-80 transition-opacity"
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    loading="lazy"
                   />
                 </button>
               ))}
@@ -106,55 +111,55 @@ const CarDetail = () => {
           </div>
 
           {/* Car Info & Variant Selector */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <div className="flex items-center space-x-3 mb-2">
-                <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <span className="bg-red-50 text-red-700 px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium border border-red-100">
                   {car.category}
                 </span>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-0.5 sm:space-x-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                    <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
                   ))}
-                  <span className="text-sm text-gray-600 ml-1">(4.8/5)</span>
+                  <span className="text-xs sm:text-sm text-gray-600 ml-0.5">4.8/5</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between mb-4">
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{car.name}</h1>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 sm:mb-4">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">{car.name}</h1>
                 <button
                   onClick={handleShare}
-                  className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
+                  className="flex items-center justify-center space-x-1.5 bg-white hover:bg-gray-50 text-red-600 border border-red-200 hover:border-red-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md w-full sm:w-auto"
                   aria-label="Bagikan"
                   title="Bagikan"
                 >
-                  <Share2 className="w-5 h-5" />
-                  <span>Bagikan</span>
+                  <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="text-sm sm:text-base">Bagikan</span>
                 </button>
               </div>
-              <p className="text-lg text-gray-600 leading-relaxed">{car.description}</p>
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed sm:leading-loose">{car.description}</p>
             </div>
 
             {/* Quick Specs */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white rounded-xl p-4 text-center shadow-lg">
-                <Settings className="w-6 h-6 text-red-600 mx-auto mb-2" />
-                <div className="text-sm text-gray-600">Mesin</div>
-                <div className="font-semibold">{car.engine}</div>
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
+                <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Mesin</div>
+                <div className="text-sm sm:text-base font-semibold text-gray-900">{car.engine}</div>
               </div>
-              <div className="bg-white rounded-xl p-4 text-center shadow-lg">
-                <Fuel className="w-6 h-6 text-red-600 mx-auto mb-2" />
-                <div className="text-sm text-gray-600">Transmisi</div>
-                <div className="font-semibold">{car.transmission}</div>
+              <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
+                <Fuel className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Transmisi</div>
+                <div className="text-sm sm:text-base font-semibold text-gray-900">{car.transmission}</div>
               </div>
-              <div className="bg-white rounded-xl p-4 text-center shadow-lg">
-                <Users className="w-6 h-6 text-red-600 mx-auto mb-2" />
-                <div className="text-sm text-gray-600">Tempat Duduk</div>
-                <div className="font-semibold">{car.seating} Orang</div>
+              <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
+                <Users className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Tempat Duduk</div>
+                <div className="text-sm sm:text-base font-semibold text-gray-900">{car.seating} Orang</div>
               </div>
-              <div className="bg-white rounded-xl p-4 text-center shadow-lg">
-                <Shield className="w-6 h-6 text-red-600 mx-auto mb-2" />
-                <div className="text-sm text-gray-600">Bahan Bakar</div>
-                <div className="font-semibold">{car.fuel_type}</div>
+              <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
+                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Bahan Bakar</div>
+                <div className="text-sm sm:text-base font-semibold text-gray-900">{car.fuel_type}</div>
               </div>
             </div>
 
@@ -162,43 +167,48 @@ const CarDetail = () => {
             <CarVariantSelector car={car} />
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2 xs:gap-3 mt-4 sm:mt-5">
               <a
                 href={`https://wa.me/6285936562657?text=Halo%20Kak%20Sayuti%2C%20saya%20ingin%20test%20drive%20${car.name}.%20Kapan%20bisa%20diatur%3F`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 text-center"
+                className="bg-white border-2 border-red-600 text-red-600 hover:bg-red-50 px-1.5 xs:px-2.5 py-1.5 rounded-lg text-[11px] xs:text-xs sm:text-sm font-medium text-center transition-all duration-200 flex items-center justify-center space-x-1 shadow-sm hover:shadow-md whitespace-nowrap"
+                title="Jadwalkan Test Drive"
               >
-                Test Drive
+                <Car className="w-2.5 h-2.5 xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                <span className="truncate">Test Drive</span>
               </a>
               <a
                 href={`https://wa.me/6285936562657?text=Halo%20Kak%20Sayuti%2C%20saya%20ingin%20tahu%20info%20cicilan%20untuk%20${car.name}.%20Bisa%20bantu%20simulasi%3F`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 text-center"
+                className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white px-1.5 xs:px-2.5 py-1.5 rounded-lg text-[11px] xs:text-xs sm:text-sm font-medium text-center transition-all duration-200 flex items-center justify-center space-x-1 shadow-sm hover:shadow-md whitespace-nowrap"
+                title="Simulasi Kredit"
               >
-                Simulasi Kredit
+                <CheckCircle className="w-2.5 h-2.5 xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+                <span className="truncate">Simulasi Kredit</span>
               </a>
             </div>
           </div>
         </div>
 
         {/* Detailed Information Tabs */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden mt-8 sm:mt-10">
           {/* Tab Navigation */}
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-8 px-6">
+          <div className="border-b border-gray-200 overflow-x-auto">
+            <nav className="flex px-4 sm:px-6 min-w-max">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors duration-200 flex items-center space-x-2 ${
+                  className={`py-3 sm:py-4 px-2 sm:px-3 border-b-2 font-medium text-xs sm:text-sm transition-all duration-200 flex items-center space-x-1.5 sm:space-x-2 whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'border-red-600 text-red-600'
+                      ? 'border-red-600 text-red-600 font-semibold'
                       : 'border-transparent text-gray-500 hover:text-gray-700'
                   }`}
+                  aria-current={activeTab === tab.id ? 'page' : undefined}
                 >
-                  <tab.icon className="w-4 h-4" />
+                  <tab.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                   <span>{tab.label}</span>
                 </button>
               ))}
