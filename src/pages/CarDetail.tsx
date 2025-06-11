@@ -1,15 +1,39 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Phone, Shield, Fuel, Users, Settings, Camera, CheckCircle, Star, Car } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { ArrowLeft, Phone, Shield, Fuel, Users, Settings, Camera, CheckCircle, Star, Car, Share2 } from 'lucide-react';
+import { shareContent, updateMetaTags } from '../utils/shareUtils';
 import { getCarById } from '../data/cars';
 import CarVariantSelector from '../components/CarVariantSelector';
 
 const CarDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
 
   const car = getCarById(id || '');
+
+  const handleShare = async () => {
+    if (!car) return;
+    
+    const shareUrl = `${window.location.origin}${location.pathname}`;
+    const shareText = `Lihat ${car.name} di Honda Royal - ${car.description.substring(0, 100)}...`;
+    
+    await shareContent(car.name, shareText, shareUrl);
+  };
+
+  // Update meta tags when car data is loaded
+  useEffect(() => {
+    if (car) {
+      const shareUrl = `${window.location.origin}${location.pathname}`;
+      updateMetaTags(
+        `${car.name} - Honda Royal`,
+        car.description,
+        car.images.gallery[0],
+        shareUrl
+      );
+    }
+  }, [car, location.pathname]);
 
   if (!car) {
     return (
@@ -95,7 +119,18 @@ const CarDetail = () => {
                   <span className="text-sm text-gray-600 ml-1">(4.8/5)</span>
                 </div>
               </div>
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{car.name}</h1>
+              <div className="flex items-center justify-between mb-4">
+                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{car.name}</h1>
+                <button
+                  onClick={handleShare}
+                  className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-md hover:shadow-lg"
+                  aria-label="Bagikan"
+                  title="Bagikan"
+                >
+                  <Share2 className="w-5 h-5" />
+                  <span>Bagikan</span>
+                </button>
+              </div>
               <p className="text-lg text-gray-600 leading-relaxed">{car.description}</p>
             </div>
 

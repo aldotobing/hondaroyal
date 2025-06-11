@@ -20,7 +20,7 @@ const Promotions = () => {
     },
     {
       id: 2,
-      title: "DP Ringan Honda Brio & Jazz",
+      title: "DP Ringan Honda Brio",
       description: "DP mulai dari 10 juta saja untuk Honda Brio dan Honda Jazz dengan cicilan terjangkau",
       discount: "DP Mulai 10 Juta",
       validUntil: "28 Februari 2024",
