@@ -158,13 +158,7 @@ const Home = () => {
                   </div>
 
                   <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight">
-                    <span className="inline-block animate-[fadeInUp_0.6s_ease-out]">Temukan</span>{' '}
-                    <br className="hidden sm:block" />
-                    <span className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent inline-block animate-[fadeInUp_0.6s_ease-out_0.2s_both]">
-                      Mobil Honda
-                    </span>
-                    <br />
-                    <span className="inline-block animate-[fadeInUp_0.6s_ease-out_0.4s_both]">Impian Anda</span>
+                    Temukan Mobil Honda Impian Anda
                   </h1>
                   
                   <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl animate-[fadeInUp_0.6s_ease-out_0.6s_both] opacity-0">
@@ -357,6 +351,48 @@ const Home = () => {
         </div>
       </AnimatedSection>
 
+      {/* Explore Pages Section */}
+      <AnimatedSection className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Jelajahi Lebih Lanjut
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Temukan informasi lengkap tentang Honda Royal
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+            <Link to="/katalog" className="flex flex-col items-center p-6 rounded-2xl bg-red-50 hover:bg-red-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
+              <img src="/city.jpg" alt="Katalog" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Katalog</h3>
+              <p className="text-gray-600 text-center">Lihat semua model mobil Honda</p>
+            </Link>
+            <Link to="/promo" className="flex flex-col items-center p-6 rounded-2xl bg-blue-50 hover:bg-blue-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
+              <img src="/BRVnx7.jpg" alt="Promo" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Promo</h3>
+              <p className="text-gray-600 text-center">Dapatkan penawaran terbaik</p>
+            </Link>
+            <Link to="/galeri" className="flex flex-col items-center p-6 rounded-2xl bg-green-50 hover:bg-green-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
+              <img src="/civicrs.jpg" alt="Galeri" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Galeri</h3>
+              <p className="text-gray-600 text-center">Lihat koleksi foto mobil Honda</p>
+            </Link>
+            <Link to="/tentang" className="flex flex-col items-center p-6 rounded-2xl bg-yellow-50 hover:bg-yellow-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
+              <img src="/accord.jpg" alt="Tentang Kami" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Tentang Kami</h3>
+              <p className="text-gray-600 text-center">Kenali Honda Royal lebih dekat</p>
+            </Link>
+            <Link to="/kontak" className="flex flex-col items-center p-6 rounded-2xl bg-purple-50 hover:bg-purple-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
+              <img src="/city_hatchback.jpg" alt="Kontak" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Kontak</h3>
+              <p className="text-gray-600 text-center">Hubungi kami sekarang</p>
+            </Link>
+          </div>
+        </div>
+      </AnimatedSection>
+
       {/* Features Section */}
       <AnimatedSection className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -379,6 +415,42 @@ const Home = () => {
                 <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* About Honda Royal Section */}
+      <AnimatedSection className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Tentang Honda Royal
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Dealer Resmi Honda Terpercaya untuk Kebutuhan Otomotif Anda
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Honda Royal adalah dealer resmi mobil Honda terkemuka di Indonesia, berkomitmen untuk menyediakan pengalaman kepemilikan mobil yang luar biasa bagi setiap pelanggan. Dengan dedikasi terhadap kualitas, inovasi, dan kepuasan pelanggan, kami menawarkan rangkaian lengkap mobil Honda terbaru yang dirancang untuk memenuhi berbagai gaya hidup dan kebutuhan.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Kami memahami bahwa membeli mobil adalah investasi besar, oleh karena itu tim profesional kami siap membantu Anda di setiap langkah, mulai dari pemilihan model yang tepat, penawaran harga terbaik, hingga layanan purna jual yang komprehensif. Kami bangga menjadi bagian dari jaringan Honda yang luas, memastikan Anda mendapatkan dukungan dan suku cadang asli di seluruh Indonesia.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Di Honda Royal, kami tidak hanya menjual mobil; kami membangun hubungan jangka panjang dengan pelanggan kami. Kunjungi showroom kami hari ini atau hubungi sales representative kami untuk merasakan langsung perbedaan Honda Royal. Dapatkan penawaran eksklusif, cicilan ringan, dan berbagai promo menarik yang hanya bisa Anda temukan di sini. Percayakan kebutuhan mobil Honda Anda kepada kami, dan rasakan kenyamanan serta keamanan berkendara bersama keluarga tercinta.
+              </p>
+            </div>
+            <div className="relative">
+              <img src="/hero_banner.jpg" alt="About Honda Royal" className="rounded-2xl shadow-xl w-full h-auto object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
+              <div className="absolute bottom-6 left-6 text-white">
+                <h3 className="text-2xl font-bold">Pengalaman Terbaik</h3>
+                <p className="text-lg">Layanan profesional dan terpercaya</p>
+              </div>
+            </div>
           </div>
         </div>
       </AnimatedSection>
