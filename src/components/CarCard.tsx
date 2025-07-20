@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Phone, Star } from 'lucide-react';
 import { Car, getPriceRange } from '../data/cars';
+import { compressImage } from '../utils/imageCompressor';
 
 interface CarCardProps {
   car: Car;
@@ -8,6 +10,23 @@ interface CarCardProps {
 }
 
 const CarCard = ({ car, showVariants = false }: CarCardProps) => {
+  const [compressedImageUrl, setCompressedImageUrl] = useState<string>('');
+
+  useEffect(() => {
+    const getCompressedImage = async () => {
+      const compressedUrl = await compressImage(car.images.main);
+      setCompressedImageUrl(compressedUrl);
+    };
+
+    getCompressedImage();
+
+    return () => {
+      if (compressedImageUrl) {
+        URL.revokeObjectURL(compressedImageUrl);
+      }
+    };
+  }, [car.images.main]);
+
   const hasPromo = car.variants.some(variant => variant.promo_price) || car.promo;
   const priceRange = getPriceRange(car);
 
@@ -16,7 +35,7 @@ const CarCard = ({ car, showVariants = false }: CarCardProps) => {
       {/* Image Container */}
       <div className="relative h-48 sm:h-52 md:h-56 overflow-hidden group">
         <img
-          src={car.images.main}
+          src={compressedImageUrl || car.images.main}
           alt={car.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

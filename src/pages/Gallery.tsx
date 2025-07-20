@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import { cars } from '../data/cars';
+import SEO from '../components/SEO';
+import { compressImage } from '../utils/imageCompressor';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [compressedImages, setCompressedImages] = useState<{[key: string]: string}>({});
 
   const categories = ['all', ...Array.from(new Set(cars.map(car => car.category)))];
 
@@ -22,6 +25,25 @@ const Gallery = () => {
   const filteredImages = selectedCategory === 'all' 
     ? allImages 
     : allImages.filter(image => image.category === selectedCategory);
+
+  useEffect(() => {
+    const getCompressedImages = async () => {
+      const compressedUrls: {[key: string]: string} = {};
+      for (const image of filteredImages) {
+        if (!compressedImages[image.id]) {
+          const compressedUrl = await compressImage(image.url);
+          compressedUrls[image.id] = compressedUrl;
+        }
+      }
+      setCompressedImages(prev => ({...prev, ...compressedUrls}));
+    };
+
+    getCompressedImages();
+
+    return () => {
+      Object.values(compressedImages).forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [filteredImages]);
 
   const openLightbox = (imageUrl: string) => {
     const index = filteredImages.findIndex(img => img.url === imageUrl);
@@ -47,6 +69,12 @@ const Gallery = () => {
 
   return (
     <div className="py-8 lg:py-12 bg-gray-50 min-h-screen">
+      <SEO 
+        title="Galeri Foto Mobil Honda - Interior & Eksterior"
+        description="Lihat koleksi foto-foto berkualitas tinggi dari semua model mobil Honda. Jelajahi detail interior dan eksterior mobil impian Anda."
+        keywords="galeri honda, foto mobil honda, gambar honda, interior honda, eksterior honda"
+        url="https://hondawiyung.web.id/galeri"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -84,7 +112,7 @@ const Gallery = () => {
               onClick={() => openLightbox(image.url)}
             >
               <img
-                src={image.url}
+                src={compressedImages[image.id] || image.url}
                 alt={`${image.carName} gallery`}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />

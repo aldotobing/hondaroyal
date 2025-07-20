@@ -1,4 +1,5 @@
 import { Award, Shield, Users, Clock, MapPin, Phone, Star, CheckCircle } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const About = () => {
   const achievements = [
@@ -90,6 +91,12 @@ const About = () => {
 
   return (
     <div className="py-8 lg:py-12 bg-gray-50 min-h-screen">
+      <SEO 
+        title="Tentang Honda Royal - Dealer Terpercaya Anda"
+        description="Kenali lebih dekat Honda Royal, dealer resmi mobil Honda dengan pengalaman lebih dari 15 tahun. Kami berkomitmen untuk memberikan pelayanan terbaik."
+        keywords="tentang kami, dealer honda, honda royal, profil perusahaan, sejarah honda royal"
+        url="https://hondawiyung.web.id/tentang"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">

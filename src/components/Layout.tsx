@@ -5,7 +5,7 @@ import WhatsAppButton from './WhatsAppButton';
 
 // Helper function to generate structured data
 const generateStructuredData = (pathname: string) => {
-  const baseUrl = 'https://hondaroyalwiyung.com';
+  const baseUrl = 'https://hondawiyung.web.id';
   const currentUrl = `${baseUrl}${pathname}`;
   
   const website = {
@@ -26,7 +26,7 @@ const generateStructuredData = (pathname: string) => {
     "name": "Honda Royal Wiyung",
     "image": `${baseUrl}/logo-honda-royal-wiyung.jpg`,
     "telephone": "+62 31 99000000",
-    "email": "info@hondaroyalwiyung.com",
+    "email": "info@hondawiyung.web.id",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Jl. Raya Wiyung No. 123",

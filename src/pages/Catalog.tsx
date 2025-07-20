@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, Filter } from 'lucide-react';
 import { cars } from '../data/cars';
 import CarCard from '../components/CarCard';
+import SEO from '../components/SEO';
 
 const Catalog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,6 +48,12 @@ const Catalog = () => {
 
   return (
     <div className="py-8 lg:py-12 bg-gray-50 min-h-screen">
+      <SEO 
+        title="Katalog Mobil Honda - Harga Terbaru & Terlengkap"
+        description="Lihat daftar lengkap mobil Honda terbaru di Indonesia. Bandingkan harga, spesifikasi, dan temukan mobil yang paling cocok untuk Anda."
+        keywords="katalog honda, harga mobil honda, daftar mobil honda, mobil honda terbaru, spesifikasi honda"
+        url="https://hondawiyung.web.id/katalog"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">

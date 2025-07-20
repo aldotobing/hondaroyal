@@ -4,14 +4,34 @@ import { ArrowLeft, Phone, Shield, Fuel, Users, Settings, Camera, CheckCircle, S
 import { shareContent, updateMetaTags } from '../utils/shareUtils';
 import { getCarById } from '../data/cars';
 import CarVariantSelector from '../components/CarVariantSelector';
+import SEO from '../components/SEO';
+import { compressImage } from '../utils/imageCompressor';
 
 const CarDetail = () => {
   const { id } = useParams();
   const location = useLocation();
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
+  const [compressedImages, setCompressedImages] = useState<string[]>([]);
 
   const car = getCarById(id || '');
+
+  useEffect(() => {
+    if (car) {
+      const getCompressedImages = async () => {
+        const compressedUrls = await Promise.all(
+          car.images.gallery.map(image => compressImage(image))
+        );
+        setCompressedImages(compressedUrls);
+      };
+
+      getCompressedImages();
+    }
+
+    return () => {
+      compressedImages.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [car]);
 
   const handleShare = async () => {
     if (!car) return;
@@ -22,18 +42,7 @@ const CarDetail = () => {
     await shareContent(car.name, shareText, shareUrl);
   };
 
-  // Update meta tags when car data is loaded
-  useEffect(() => {
-    if (car) {
-      const shareUrl = `${window.location.origin}${location.pathname}`;
-      updateMetaTags(
-        `${car.name} - Honda Royal`,
-        car.description,
-        car.images.gallery[0],
-        shareUrl
-      );
-    }
-  }, [car, location.pathname]);
+  
 
   if (!car) {
     return (
@@ -59,6 +68,13 @@ const CarDetail = () => {
 
   return (
     <div className="py-6 sm:py-8 lg:py-10 bg-gray-50 min-h-screen">
+      <SEO 
+        title={`${car.name} - Harga & Spesifikasi | Honda Royal`}
+        description={`Dapatkan informasi lengkap, harga, dan spesifikasi terbaru untuk ${car.name}. Lihat galeri dan promo menarik di Honda Royal.`}
+        keywords={`${car.name}, harga ${car.name}, spesifikasi ${car.name}, honda ${car.id}, dealer honda`}
+        image={car.images.gallery[0]}
+        url={`${window.location.origin}${location.pathname}`}
+      />
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         {/* Breadcrumb */}
         <div className="flex items-center space-x-1.5 text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8">
@@ -75,7 +91,7 @@ const CarDetail = () => {
           <div className="lg:col-span-2 space-y-3 sm:space-y-4">
             <div className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
               <img
-                src={car.images.gallery[selectedImage]}
+                src={compressedImages[selectedImage] || car.images.gallery[selectedImage]}
                 alt={`${car.name} - Image ${selectedImage + 1}`}
                 className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="eager"
@@ -100,7 +116,7 @@ const CarDetail = () => {
                   aria-label={`Lihat gambar ${index + 1} dari ${car.images.gallery.length}`}
                 >
                   <img
-                    src={image}
+                    src={compressedImages[index] || image}
                     alt={`${car.name} thumbnail ${index + 1}`}
                     className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                     loading="lazy"
@@ -334,7 +350,7 @@ const CarDetail = () => {
                   {car.images.gallery.map((image, index) => (
                     <div key={index} className="relative aspect-video rounded-lg overflow-hidden">
                       <img
-                        src={image}
+                        src={compressedImages[index] || image}
                         alt={`${car.name} gallery ${index + 1}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />

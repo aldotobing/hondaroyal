@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { cars, getCarsWithPromo } from '../data/cars';
 import CarCard from '../components/CarCard';
 import AnimatedSection from '../components/AnimatedSection';
+import SEO from '../components/SEO';
 
 const Home = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState(0);
@@ -103,6 +104,13 @@ const Home = () => {
 
   return (
     <div>
+      <SEO 
+        title="Honda Royal - Dealer Resmi Mobil Honda di Indonesia"
+        description="Temukan mobil Honda impian Anda dengan kualitas terbaik, teknologi canggih, dan layanan purna jual terpercaya. Dapatkan promo dan cicilan menarik untuk semua tipe mobil Honda."
+        keywords="Honda, Mobil Honda, Dealer Honda, Mobil Baru, Mobil Murah, Mobil Keluarga, Mobil Irit, Mobil Terbaik, Harga Honda, Promo Honda"
+        image="/hero_banner.jpg"
+        url="https://hondawiyung.web.id/"
+      />
       {/* Hero Section */}
       <AnimatedSection className="w-full">
         <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden">

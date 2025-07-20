@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle, MessageCircle } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -79,6 +80,12 @@ Mohon bantuannya untuk informasi lebih lanjut. Terima kasih!`;
 
   return (
     <div className="py-8 lg:py-12 bg-gray-50 min-h-screen">
+      <SEO 
+        title="Hubungi Kami - Honda Royal"
+        description="Hubungi sales representatif kami untuk informasi lebih lanjut, test drive, atau konsultasi. Kami siap membantu Anda 24/7."
+        keywords="kontak honda, hubungi kami, alamat dealer honda, telepon honda, email honda"
+        url="https://hondawiyung.web.id/kontak"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">

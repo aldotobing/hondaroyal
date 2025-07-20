@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hondaroyal.pages.dev/sitemap.xml
+Sitemap: https://hondaroyal.web.id/sitemap.xml
 
 # Disallow admin and API routes
 Disallow: /admin/

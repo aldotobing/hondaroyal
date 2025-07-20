@@ -1,4 +1,5 @@
 import { Calendar, Gift, Percent, CreditCard, Phone, CheckCircle, Clock } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Promotions = () => {
   const promos = [
@@ -98,6 +99,12 @@ const Promotions = () => {
 
   return (
     <div className="py-8 lg:py-12 bg-gray-50 min-h-screen">
+      <SEO 
+        title="Promo Mobil Honda Terbaru - Diskon & Penawaran Terbaik"
+        description="Dapatkan promo terbaru dan penawaran terbaik untuk pembelian mobil Honda. Diskon besar, cicilan ringan, dan banyak bonus menarik menanti Anda."
+        keywords="promo honda, diskon honda, penawaran honda, cicilan ringan honda, bonus pembelian honda"
+        url="https://hondawiyung.web.id/promo"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">

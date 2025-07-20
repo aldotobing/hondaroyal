@@ -1,39 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hondaroyalwiyung.com/</loc>
-    <lastmod>2025-06-11</lastmod>
+    <loc>https://hondawiyung.web.id/</loc>
+    <lastmod>2025-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://hondaroyalwiyung.com/katalog</loc>
-    <lastmod>2025-06-11</lastmod>
+    <loc>https://hondawiyung.web.id/katalog</loc>
+    <lastmod>2025-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://hondaroyalwiyung.com/galeri</loc>
-    <lastmod>2025-06-11</lastmod>
+    <loc>https://hondawiyung.web.id/galeri</loc>
+    <lastmod>2025-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://hondaroyalwiyung.com/promo</loc>
-    <lastmod>2025-06-11</lastmod>
+    <loc>https://hondawiyung.web.id/promo</loc>
+    <lastmod>2025-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://hondaroyalwiyung.com/tentang</loc>
-    <lastmod>2025-06-11</lastmod>
+    <loc>https://hondawiyung.web.id/tentang</loc>
+    <lastmod>2025-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://hondaroyalwiyung.com/kontak</loc>
-    <lastmod>2025-06-11</lastmod>
+    <loc>https://hondawiyung.web.id/kontak</loc>
+    <lastmod>2025-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/brio</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/brv-n7x</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/accord-rs-ehev</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/city-sedan</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/city-hatchback</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/hrv</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/crv</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://hondawiyung.web.id/mobil/civic</loc>
+    <lastmod>2025-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
