@@ -6,10 +6,23 @@ type ShareData = {
   files?: File[];
 };
 
+// Function to wait for meta tags to be updated
+const waitForMetaUpdate = (): Promise<void> => {
+  return new Promise(resolve => {
+    // Use requestAnimationFrame to ensure the DOM has been updated
+    requestAnimationFrame(() => {
+      // Add a small delay to ensure all updates are processed
+      setTimeout(resolve, 100);
+    });
+  });
+};
+
 export const shareContent = async (title: string, text: string, url: string, imageUrl?: string) => {
   // First, update meta tags for rich link previews
   if (imageUrl) {
     updateMetaTags(title, text, imageUrl, url);
+    // Wait for meta tags to be updated in the DOM
+    await waitForMetaUpdate();
   }
   
   // Then prepare the share data
@@ -45,6 +58,15 @@ export const updateMetaTags = (title: string, description: string, imageUrl: str
     ? imageUrl 
     : `${window.location.origin}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
   const imageWithCacheBuster = `${fullImageUrl}${fullImageUrl.includes('?') ? '&' : '?'}t=${timestamp}`;
+  
+  // Create or update the canonical URL
+  let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'canonical';
+    document.head.appendChild(link);
+  }
+  link.href = url;
 
   // Update or create meta tags for social sharing
   const metaTags = [

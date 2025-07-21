@@ -16,10 +16,10 @@ interface Promotion {
 }
 
 const Promotions = () => {
-  const BASE_URL = "https://hondawiyung.web.id/promo"; // Base URL for promotions page
 
   const handleShare = async (promo: Promotion) => {
-    const shareUrl = `${BASE_URL}?promoId=${promo.id}`;
+    // Create a unique URL for this promo
+    const shareUrl = `${window.location.origin}/promo/${promo.id}`;
     
     // Ensure the image URL is properly formatted
     let imageUrl = promo.image;
@@ -29,16 +29,33 @@ const Promotions = () => {
       imageUrl = `${window.location.origin}/${cleanPath}`;
     }
     
-    // Update meta tags for social sharing
-    updateMetaTags(promo.title, promo.description, imageUrl, shareUrl);
+    // Create a simple but descriptive share text
+    const mainOffer = (promo.terms[0] || promo.description).replace(/\s+/g, ' ').trim();
+    // Keep it on one line to ensure it shows up in the share dialog
+    const shareText = `🔥 ${promo.title} • ${mainOffer} • ${promo.discount}`;
     
-    // Share with image preview
-    await shareContent(
+    // Update meta tags for social sharing
+    updateMetaTags(
       promo.title,
-      promo.description,
-      shareUrl,
-      imageUrl
+      `${promo.description}. ${promo.terms.join(' ')}`,
+      imageUrl,
+      shareUrl
     );
+    
+    try {
+      // Share with image preview and description
+      await shareContent(
+        promo.title,
+        shareText, // Use the enhanced description
+        shareUrl,
+        imageUrl
+      );
+    } catch (error) {
+      console.error('Sharing failed:', error);
+      // Fallback to just copying the URL if sharing fails
+      await navigator.clipboard?.writeText(`${promo.title}\n\n${shareUrl}`);
+      alert('Link promo berhasil disalin ke clipboard!');
+    }
   };
   // Get cars that have promotions
   const promoProducts = getCarsWithPromo();
