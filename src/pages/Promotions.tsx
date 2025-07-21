@@ -30,7 +30,7 @@ const Promotions = () => {
 
   const handleShare = async (promo: Promotion) => {
     // Create a unique URL for this promo
-    const shareUrl = `${window.location.origin}/promo/${promo.id}`;
+    const shareUrl = `${window.location.origin}/promo/`;
     
     // Ensure the image URL is properly formatted
     let imageUrl = promo.image;
