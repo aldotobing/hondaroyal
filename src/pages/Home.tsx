@@ -1,12 +1,24 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Star, CheckCircle, Phone, Car, Tag, Image as ImageIcon, CarFront } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { cars } from '../data/cars';
-import CarCard from '../components/CarCard';
-import AnimatedSection from '../components/AnimatedSection';
-import HeroSection from '../components/HeroSection';
-import SEO from '../components/SEO';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Shield,
+  Award,
+  Users,
+  Star,
+  CheckCircle,
+  Phone,
+  Car,
+  Tag,
+  Image as ImageIcon,
+  CarFront,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { cars } from "../data/cars";
+import CarCard from "../components/CarCard";
+import AnimatedSection from "../components/AnimatedSection";
+import HeroSection from "../components/HeroSection";
+import SEO from "../components/SEO";
 
 const Home = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState(0);
@@ -15,18 +27,21 @@ const Home = () => {
     {
       icon: Shield,
       title: "Keamanan Terdepan",
-      description: "Honda SENSING dan fitur keselamatan canggih untuk melindungi keluarga Anda"
+      description:
+        "Honda SENSING dan fitur keselamatan canggih untuk melindungi keluarga Anda",
     },
     {
       icon: Award,
       title: "Kualitas Premium",
-      description: "Teknologi mesin terdepan dengan efisiensi bahan bakar yang optimal"
+      description:
+        "Teknologi mesin terdepan dengan efisiensi bahan bakar yang optimal",
     },
     {
       icon: Users,
       title: "Layanan Terpercaya",
-      description: "Jaringan servis resmi dan suku cadang original di seluruh Indonesia"
-    }
+      description:
+        "Jaringan servis resmi dan suku cadang original di seluruh Indonesia",
+    },
   ];
 
   const testimonials = [
@@ -34,30 +49,30 @@ const Home = () => {
       name: "Budi Santoso",
       model: "Honda CR-V",
       rating: 5,
-      text: "Sangat puas dengan Honda CR-V! Nyaman untuk keluarga dan irit BBM. Pelayanan Sayuti juga sangat membantu dari awal hingga selesai."
+      text: "Sangat puas dengan Honda CR-V! Nyaman untuk keluarga dan irit BBM. Pelayanan Sayuti juga sangat membantu dari awal hingga selesai.",
     },
     {
       name: "Sari Wijaya",
       model: "Honda Brio",
       rating: 5,
-      text: "Honda Brio cocok banget untuk daily use di Jakarta. Compact tapi kabin luas, parkir mudah. Recommended!"
+      text: "Honda Brio cocok banget untuk daily use di Jakarta. Compact tapi kabin luas, parkir mudah. Recommended!",
     },
     {
       name: "Ahmad Rahman",
       model: "Honda Civic RS",
       rating: 5,
-      text: "Performa Honda Civic RS turbo luar biasa! Desain sporty dan fitur lengkap. Worth it untuk upgrade dari mobil lama."
-    }
+      text: "Performa Honda Civic RS turbo luar biasa! Desain sporty dan fitur lengkap. Worth it untuk upgrade dari mobil lama.",
+    },
   ];
 
   const featuredCars = cars.slice(0, 3);
 
   return (
     <div>
-      <SEO 
-        title="Honda Royal Wiyung - Dealer Resmi Mobil Honda di Indonesia"
-        description="Temukan mobil Honda impian Anda dengan kualitas terbaik, teknologi canggih, dan layanan purna jual terpercaya. Dapatkan promo dan cicilan menarik untuk semua tipe mobil Honda."
-        keywords="Honda, Mobil Honda, Dealer Honda, Mobil Baru, Mobil Murah, Mobil Keluarga, Mobil Irit, Mobil Terbaik, Harga Honda, Promo Honda"
+      <SEO
+        title="Dealer Honda Surabaya | Promo Mobil Honda Terbaik 2025 | Honda Royal Wiyung"
+        description="Dealer resmi Honda Surabaya menawarkan harga mobil Honda termurah 2025. Dapatkan promo & cicilan 0% untuk Brio, CR-V, HR-V, dan City Hatchback. Test drive gratis!"
+        keywords="dealer honda surabaya, harga mobil honda, promo honda, kredit honda, honda brio surabaya, honda crv surabaya, honda hrv surabaya, test drive honda"
         image="/hero_banner.jpg"
         url="https://hondawiyung.web.id/"
       />
@@ -68,15 +83,16 @@ const Home = () => {
       <AnimatedSection className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Model Honda Terpopuler
-            </h2>
+            </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Pilihan terbaik dari lineup Honda dengan teknologi terdepan dan harga terjangkau
+              Pilihan terbaik dari lineup Honda dengan teknologi terdepan dan
+              harga terjangkau
             </p>
           </div>
 
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             initial="hidden"
             whileInView="visible"
@@ -86,12 +102,12 @@ const Home = () => {
               visible: {
                 opacity: 1,
                 transition: {
-                  staggerChildren: 0.15
-                }
-              }
+                  staggerChildren: 0.15,
+                },
+              },
             }}
           >
-            {featuredCars.map((car, index) => (
+            {featuredCars.map((car) => (
               <motion.div
                 key={car.id}
                 variants={{
@@ -101,9 +117,9 @@ const Home = () => {
                     y: 0,
                     transition: {
                       duration: 0.8,
-                      ease: [0.16, 0.7, 0.2, 1]
-                    }
-                  }
+                      ease: [0.16, 0.7, 0.2, 1],
+                    },
+                  },
                 }}
               >
                 <CarCard car={car} />
@@ -126,43 +142,68 @@ const Home = () => {
       {/* Quick Links Section */}
       <AnimatedSection className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Layanan Kami
+            </h2>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <Link to="/katalog" className="group p-6 rounded-xl bg-white hover:bg-red-50 transition-colors duration-200 border border-gray-100 hover:border-red-100">
+            <Link
+              to="/katalog"
+              className="group p-6 rounded-xl bg-white hover:bg-red-50 transition-colors duration-200 border border-gray-100 hover:border-red-100"
+            >
               <div className="flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-full bg-red-50 group-hover:bg-red-100 flex items-center justify-center mb-4 transition-colors duration-200">
                   <Car className="w-8 h-8 text-red-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Katalog</h3>
-                <p className="text-sm text-gray-600">Lihat semua model mobil Honda</p>
+                <div className="font-semibold text-gray-900 mb-1">Katalog</div>
+                <p className="text-sm text-gray-600">
+                  Lihat semua model mobil Honda
+                </p>
               </div>
             </Link>
-            
-            <Link to="/promo" className="group p-6 rounded-xl bg-white hover:bg-blue-50 transition-colors duration-200 border border-gray-100 hover:border-blue-100">
+
+            <Link
+              to="/promo"
+              className="group p-6 rounded-xl bg-white hover:bg-blue-50 transition-colors duration-200 border border-gray-100 hover:border-blue-100"
+            >
               <div className="flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-full bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-4 transition-colors duration-200">
                   <Tag className="w-8 h-8 text-blue-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Promo</h3>
-                <p className="text-sm text-gray-600">Dapatkan penawaran terbaik</p>
+                <div className="font-semibold text-gray-900 mb-1">Promo</div>
+                <p className="text-sm text-gray-600">
+                  Dapatkan penawaran terbaik
+                </p>
               </div>
             </Link>
-            
-            <Link to="/galeri" className="group p-6 rounded-xl bg-white hover:bg-green-50 transition-colors duration-200 border border-gray-100 hover:border-green-100">
+
+            <Link
+              to="/galeri"
+              className="group p-6 rounded-xl bg-white hover:bg-green-50 transition-colors duration-200 border border-gray-100 hover:border-green-100"
+            >
               <div className="flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-full bg-green-50 group-hover:bg-green-100 flex items-center justify-center mb-4 transition-colors duration-200">
                   <ImageIcon className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Galeri</h3>
-                <p className="text-sm text-gray-600">Lihat koleksi foto mobil</p>
+                <div className="font-semibold text-gray-900 mb-1">Galeri</div>
+                <p className="text-sm text-gray-600">
+                  Lihat koleksi foto mobil
+                </p>
               </div>
             </Link>
-            
-            <Link to="/test-drive" className="group p-6 rounded-xl bg-white hover:bg-amber-50 transition-colors duration-200 border border-gray-100 hover:border-amber-100">
+
+            <Link
+              to="/test-drive"
+              className="group p-6 rounded-xl bg-white hover:bg-amber-50 transition-colors duration-200 border border-gray-100 hover:border-amber-100"
+            >
               <div className="flex flex-col items-center text-center">
                 <div className="w-16 h-16 rounded-full bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center mb-4 transition-colors duration-200">
                   <CarFront className="w-8 h-8 text-amber-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-1">Test Drive</h3>
+                <div className="font-semibold text-gray-900 mb-1">
+                  Test Drive
+                </div>
                 <p className="text-sm text-gray-600">Jadwalkan test drive</p>
               </div>
             </Link>
@@ -178,24 +219,31 @@ const Home = () => {
               Mengapa Memilih Honda?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Komitmen kami untuk memberikan yang terbaik bagi keluarga Indonesia
+              Komitmen kami untuk memberikan yang terbaik bagi keluarga
+              Indonesia
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="text-center p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div
+                key={index}
+                className="text-center p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <feature.icon className="w-8 h-8 text-red-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </AnimatedSection>
-
 
       {/* Testimonials Section */}
       <AnimatedSection className="py-20 bg-white">
@@ -213,15 +261,20 @@ const Home = () => {
             <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
               <div className="text-center">
                 <div className="flex justify-center space-x-1 mb-6">
-                  {[...Array(testimonials[selectedTestimonial].rating)].map((_, i) => (
-                    <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
-                  ))}
+                  {[...Array(testimonials[selectedTestimonial].rating)].map(
+                    (_, i) => (
+                      <Star
+                        key={i}
+                        className="w-6 h-6 text-yellow-400 fill-current"
+                      />
+                    )
+                  )}
                 </div>
-                
+
                 <blockquote className="text-xl lg:text-2xl text-gray-700 italic mb-8 leading-relaxed">
                   "{testimonials[selectedTestimonial].text}"
                 </blockquote>
-                
+
                 <div>
                   <div className="font-bold text-gray-900 text-lg">
                     {testimonials[selectedTestimonial].name}
@@ -238,8 +291,9 @@ const Home = () => {
                 <button
                   key={index}
                   onClick={() => setSelectedTestimonial(index)}
+                  aria-label={`Testimonial ${index + 1}`}
                   className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                    index === selectedTestimonial ? 'bg-red-600' : 'bg-gray-300'
+                    index === selectedTestimonial ? "bg-red-600" : "bg-gray-300"
                   }`}
                 />
               ))}
@@ -255,9 +309,10 @@ const Home = () => {
             Siap Membawa Pulang Honda Impian Anda?
           </h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Hubungi sales representative kami sekarang untuk konsultasi gratis dan penawaran terbaik
+            Hubungi sales representative kami sekarang untuk konsultasi gratis
+            dan penawaran terbaik
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="https://wa.me/6285936562657?text=Halo%20Kak%20Sayuti%2C%20saya%20tertarik%20untuk%20membeli%20mobil%20Honda.%20Bisa%20minta%20info%20lengkap%20dan%20penawaran%20terbaik%3F"
