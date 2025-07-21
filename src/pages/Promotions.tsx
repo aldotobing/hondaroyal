@@ -1,21 +1,32 @@
-import { Gift, Percent, CheckCircle, Clock, CreditCard, Phone, Share2 } from 'lucide-react';
+import { Gift, Percent, Share2, Loader2, CreditCard, Clock, CheckCircle, Phone } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import SEO from '../components/SEO';
-import { getCarsWithPromo, type Car } from '../data/cars';
+import { getCarsWithPromo } from '../data/cars';
+import { getAllPromotions, type Promotion } from '../data/promotions';
 import { shareContent, updateMetaTags } from '../utils/shareUtils';
 
-interface Promotion {
-  id: string | number;
-  title: string;
-  description: string;
-  discount: string;
-  validUntil: string;
-  terms: string[];
-  image: string;
-  badge: string;
-  color: 'red' | 'green' | 'blue' | 'yellow' | 'purple';
-}
-
 const Promotions = () => {
+  const [activePromotions, setActivePromotions] = useState<Promotion[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadPromotions = async () => {
+      try {
+        const carsWithPromo = getCarsWithPromo();
+        const promotions = getAllPromotions(carsWithPromo);
+        setActivePromotions(promotions);
+        setError(null);
+      } catch (err) {
+        console.error('Error loading promotions:', err);
+        setError('Gagal memuat promo. Silakan coba lagi nanti.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadPromotions();
+  }, []);
 
   const handleShare = async (promo: Promotion) => {
     // Create a unique URL for this promo
@@ -44,7 +55,7 @@ const Promotions = () => {
       // Share with image preview and description
       await shareContent(
         promo.title,
-        shareText, // Use the enhanced description
+        shareText,
         shareUrl,
         imageUrl
       );
@@ -55,92 +66,36 @@ const Promotions = () => {
       alert('Link promo berhasil disalin ke clipboard!');
     }
   };
-  // Get cars that have promotions
-  const promoProducts = getCarsWithPromo();
 
-  // Format price to IDR
-  const formatPrice = (price: string) => {
-    return price.replace('Rp ', '').replace(/\./g, '');
-  };
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="flex flex-col items-center">
+          <Loader2 className="h-12 w-12 text-blue-600 animate-spin mb-4" />
+          <p className="text-gray-600">Memuat promo...</p>
+        </div>
+      </div>
+    );
+  }
 
-  // Calculate discount percentage
-  const getDiscountPercentage = (car: Car) => {
-    const variant = car.variants.find(v => v.promo_price);
-    if (!variant || !variant.price || !variant.promo_price) return 0;
-    
-    const price = parseInt(formatPrice(variant.price));
-    const promoPrice = parseInt(formatPrice(variant.promo_price));
-    const discount = ((price - promoPrice) / price) * 100;
-    
-    return Math.round(discount);
-  };
-
-  // Get the variant with the best promotion
-  const getBestVariant = (car: Car) => {
-    return car.variants.find((v) => v.promo_price) || car.variants[0];
-  };
-
-  // Create promotions from car data
-  const carPromotions: Promotion[] = promoProducts.map(car => {
-    const bestVariant = getBestVariant(car);
-    const discount = getDiscountPercentage(car);
-    
-    return {
-      id: car.id,
-      title: `Promo Spesial ${car.name}`,
-      description: `Dapatkan penawaran terbaik untuk ${car.name} dengan diskon dan fasilitas menarik`,
-      discount: `${discount}% OFF`,
-      validUntil: "31 Desember 2024",
-      terms: [
-        `Harga mulai dari ${bestVariant.promo_price || bestVariant.price}`,
-        "Gratis biaya admin",
-        "Gratis asuransi 1 tahun",
-        "Gratis service 3x kunjungan"
-      ],
-      image: car.images?.main || '/images/car-placeholder.jpg',
-      badge: "PROMO",
-      color: "blue"
-    };
-  });
-
-  // Fallback promos if no cars have promotions
-  const defaultPromos: Promotion[] = [
-    {
-      id: 'trade-in',
-      title: "Program Tukar Tambah Spesial",
-      description: "Dapatkan nilai tukar tambah terbaik untuk mobil lama Anda",
-      discount: "Nilai Tukar Tinggi",
-      validUntil: "31 Desember 2024",
-      terms: [
-        "Penilaian gratis dan transparan",
-        "Proses cepat & mudah",
-        "Berlaku untuk semua merek mobil",
-        "Dapatkan tambahan diskon khusus"
-      ],
-      image: "/promo/trade-in.jpg",
-      badge: "TRADE-IN",
-      color: "blue"
-    },
-    {
-      id: 'dp-ringan',
-      title: "DP Ringan & Cicilan Ringan",
-      description: "Nikmati kemudahan kepemilikan mobil baru dengan DP ringan dan cicilan terjangkau",
-      discount: "DP Mulai 10%",
-      validUntil: "31 Desember 2024",
-      terms: [
-        "DP mulai dari 10%",
-        "Bunga kompetitif mulai 6.8%",
-        "Tenor hingga 7 tahun",
-        "Proses cepat & mudah"
-      ],
-      image: "/promo/dp-ringan.jpg",
-      badge: "KREDIT",
-      color: "green"
-    }
-  ];
-
-  // Use car promotions if available, otherwise use default promos
-  const activePromotions = carPromotions.length > 0 ? carPromotions : defaultPromos;
+  // Error state
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center p-6 max-w-md mx-auto bg-red-50 rounded-lg">
+          <h2 className="text-xl font-semibold text-red-600 mb-2">Gagal Memuat Promo</h2>
+          <p className="text-gray-700 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Coba Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const benefits = [
     {
@@ -194,7 +149,13 @@ const Promotions = () => {
 
         {/* Current Promotions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {activePromotions.map((promo: Promotion) => (
+          {activePromotions.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <Gift className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+              <h3 className="text-xl font-semibold text-gray-700">Tidak ada promo saat ini</h3>
+              <p className="text-gray-500 mt-2">Silakan cek kembali nanti untuk penawaran terbaru</p>
+            </div>
+          ) : activePromotions.map((promo: Promotion) => (
             <div key={promo.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
               <div className="relative h-48 bg-gray-100">
                 <img
