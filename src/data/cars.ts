@@ -25,6 +25,7 @@ export interface Car {
     description: string;
     validUntil: string;
   };
+  rating?: number;
 }
 
 export interface CarVariant {
@@ -90,7 +91,8 @@ export const cars: Car[] = [
       "Desain sporty dan modern",
       "Kabin luas dan nyaman",
       "Harga terjangkau untuk city car premium"
-    ]
+    ],
+    rating: 4.8
   },
   {
     id: "brv-n7x",
@@ -150,7 +152,8 @@ export const cars: Car[] = [
       "Desain eksterior N7X Edition eksklusif",
       "Kabin luas dan nyaman",
       "Pilihan varian lengkap"
-    ]
+    ],
+    rating: 4.7
   },
   {
     id: "accord-rs-ehev",
@@ -196,7 +199,8 @@ export const cars: Car[] = [
       "Fitur Honda SENSING 360",
       "Interior mewah dengan material premium",
       "Teknologi canggih dan konektivitas lengkap"
-    ]
+    ],
+    rating: 4.9
   },
   {
     id: "city-sedan",
@@ -241,7 +245,8 @@ export const cars: Car[] = [
       "Interior mewah dengan teknologi terdepan",
       "Performa mesin yang bertenaga",
       "Efisiensi bahan bakar terbaik di kelasnya"
-    ]
+    ],
+    rating: 4.6
   },
   {
     id: "city-hatchback",
@@ -294,7 +299,8 @@ export const cars: Car[] = [
       "Honda SENSING untuk keamanan maksimal",
       "Ruang kabin luas dengan fleksibilitas hatchback",
       "Performa mesin responsif"
-    ]
+    ],
+    rating: 4.7
   },
   {
     id: "hrv",
@@ -347,7 +353,8 @@ export const cars: Car[] = [
       "Ruang kabin luas dan fleksibel",
       "Honda SENSING untuk keamanan maksimal",
       "Cocok untuk adventure dan daily use"
-    ]
+    ],
+    rating: 4.8
   },
   {
     id: "crv",
@@ -399,7 +406,8 @@ export const cars: Car[] = [
       title: "Promo Spesial CR-V",
       description: "Hemat hingga 26 juta rupiah untuk pembelian Honda CR-V",
       validUntil: "31 Maret 2024"
-    }
+    },
+    rating: 4.9
   },
   {
     id: "civic",
@@ -445,7 +453,8 @@ export const cars: Car[] = [
       "Desain futuristik dan aerodinamis",
       "Honda SENSING untuk keamanan optimal",
       "Interior premium dengan teknologi terdepan"
-    ]
+    ],
+    rating: 4.9
   },
 ];
 

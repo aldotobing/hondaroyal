@@ -7,10 +7,12 @@ import Gallery from './pages/Gallery';
 import Promotions from './pages/Promotions';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />

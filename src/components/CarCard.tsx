@@ -147,10 +147,10 @@ const CarCard = ({ car, showVariants = false }: CarCardProps) => {
           <div className="flex items-center bg-white px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
+                <Star key={i} className={`w-3 h-3 sm:w-4 sm:h-4 ${car.rating && i < Math.round(car.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
               ))}
             </div>
-            <span className="text-xs sm:text-sm font-medium text-gray-700 ml-0.5 sm:ml-1">4.8</span>
+            {car.rating && <span className="text-xs sm:text-sm font-medium text-gray-700 ml-0.5 sm:ml-1">{car.rating.toFixed(1)}</span>}
           </div>
         </div>
 
@@ -158,11 +158,6 @@ const CarCard = ({ car, showVariants = false }: CarCardProps) => {
         <div className="flex space-x-2 sm:space-x-3 mt-auto">
           <Link
             to={`/katalog/${car.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo(0, 0);
-              window.location.href = `/katalog/${car.id}`;
-            }}
             className="flex-1 bg-white border-2 border-gray-200 hover:border-blue-500 text-gray-800 hover:text-blue-600 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-medium text-center transition-all duration-200 flex items-center justify-center space-x-1.5 sm:space-x-2 group"
           >
             <span className="truncate">Detail Mobil</span>
