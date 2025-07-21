@@ -14,7 +14,6 @@ const Gallery = () => {
   const categories = ['all', ...Array.from(new Set(cars.map(car => car.category)))];
 
   // Flatten all images from all cars
- 
   const allImages = cars.flatMap(car => 
     car.images.gallery.map((image, index) => ({
       url: image,
