@@ -3,6 +3,7 @@ import { X, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import { cars } from '../data/cars';
 import SEO from '../components/SEO';
 import { compressImage } from '../utils/imageCompressor';
+import { Link } from 'react-router-dom';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -13,7 +14,7 @@ const Gallery = () => {
   const categories = ['all', ...Array.from(new Set(cars.map(car => car.category)))];
 
   // Flatten all images from all cars
-  import { Link } from 'react-router-dom';
+ 
   const allImages = cars.flatMap(car => 
     car.images.gallery.map((image, index) => ({
       url: image,
@@ -30,22 +31,41 @@ const Gallery = () => {
 
   useEffect(() => {
     const getCompressedImages = async () => {
-      const compressedUrls: {[key: string]: string} = {};
-      for (const image of filteredImages) {
-        if (!compressedImages[image.id]) {
+      const imagesToCompress = filteredImages.filter(img => !compressedImages[img.id]);
+      if (imagesToCompress.length === 0) return;
+
+      const newCompressedUrls: {[key: string]: string} = {};
+      
+      for (const image of imagesToCompress) {
+        try {
           const compressedUrl = await compressImage(image.url);
-          compressedUrls[image.id] = compressedUrl;
+          newCompressedUrls[image.id] = compressedUrl;
+        } catch (error) {
+          console.error('Error compressing image:', error);
+          // Fallback to original URL if compression fails
+          newCompressedUrls[image.id] = image.url;
         }
       }
-      setCompressedImages(prev => ({...prev, ...compressedUrls}));
+
+      setCompressedImages(prev => ({
+        ...prev,
+        ...newCompressedUrls
+      }));
     };
 
     getCompressedImages();
+  }, [filteredImages]); // Removed compressedImages from dependencies
 
+  // Cleanup URLs when component unmounts
+  useEffect(() => {
     return () => {
-      Object.values(compressedImages).forEach(url => URL.revokeObjectURL(url));
+      Object.values(compressedImages).forEach(url => {
+        if (url.startsWith('blob:')) {
+          URL.revokeObjectURL(url);
+        }
+      });
     };
-  }, [filteredImages, compressedImages]);
+  }, []);
 
   const openLightbox = (imageUrl: string) => {
     const index = filteredImages.findIndex(img => img.url === imageUrl);

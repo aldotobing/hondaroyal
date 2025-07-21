@@ -132,9 +132,9 @@ const CarCard = ({ car, showVariants = false }: CarCardProps) => {
         )}
 
         {/* Price & Rating */}
-        <div className="flex justify-between items-center mb-4 sm:mb-5 p-3 sm:p-4 bg-gray-50 rounded-lg mt-auto">
+        <div className="flex justify-between items-center mb-4 sm:mb-5 p-3 bg-gray-50 rounded-lg mt-auto">
           <div>
-            <div className="text-xl sm:text-2xl font-bold text-gray-900 leading-none">{priceRange}</div>
+            <div className="text-base sm:text-lg font-bold text-gray-900 leading-none">{priceRange}</div>
             {hasPromo && (
               <div className="text-2xs sm:text-xs text-green-600 font-medium flex items-center mt-1">
                 <svg className="w-3.5 h-3.5 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -150,7 +150,7 @@ const CarCard = ({ car, showVariants = false }: CarCardProps) => {
                 <Star key={i} className={`w-3 h-3 sm:w-4 sm:h-4 ${car.rating && i < Math.round(car.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
               ))}
             </div>
-            {car.rating && <span className="text-xs sm:text-sm font-medium text-gray-700 ml-0.5 sm:ml-1">{car.rating.toFixed(1)}</span>}
+            {car.rating && <span className="text-xs sm:text-sm font-medium text-gray-700 ml-1 sm:ml-1.5">{car.rating.toFixed(1)}</span>}
           </div>
         </div>
 

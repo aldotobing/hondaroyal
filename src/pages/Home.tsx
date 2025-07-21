@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <div>
       <SEO 
-        title="Honda Royal - Dealer Resmi Mobil Honda di Indonesia"
+        title="Honda Royal Wiyung - Dealer Resmi Mobil Honda di Indonesia"
         description="Temukan mobil Honda impian Anda dengan kualitas terbaik, teknologi canggih, dan layanan purna jual terpercaya. Dapatkan promo dan cicilan menarik untuk semua tipe mobil Honda."
         keywords="Honda, Mobil Honda, Dealer Honda, Mobil Baru, Mobil Murah, Mobil Keluarga, Mobil Irit, Mobil Terbaik, Harga Honda, Promo Honda"
         image="/hero_banner.jpg"

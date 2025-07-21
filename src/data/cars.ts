@@ -26,6 +26,10 @@ export interface Car {
     validUntil: string;
   };
   rating?: number;
+  overview?: {
+    title: string;
+    description: string[];
+  };
 }
 
 export interface CarVariant {
@@ -92,7 +96,14 @@ export const cars: Car[] = [
       "Kabin luas dan nyaman",
       "Harga terjangkau untuk city car premium"
     ],
-    rating: 4.8
+    rating: 4.8,
+    overview: {
+      title: "Pilihan Cerdas untuk Mobilitas Perkotaan",
+      description: [
+        "Honda Brio terus menjadi kekuatan dominan di pasar city car Indonesia, menarik berbagai konsumen dengan perpaduan gaya, performa, dan efisiensi bahan bakar. Sebagai pemain terkemuka di segmen Low-Cost Green Car (LCGC), Brio telah berhasil memposisikan dirinya sebagai pilihan premium, menawarkan lebih dari sekadar transportasi dasar.",
+        "Semua varian Honda Brio didukung oleh mesin 1.2 liter i-VTEC, menghasilkan 90 PS pada 6.000 rpm. Mesin ini memberikan pengalaman berkendara yang bersemangat, membuat Brio terasa lincah dan responsif di lingkungan perkotaan. Mobil ini dipuji karena 'menyenangkan untuk dikendarai', dengan handling yang mudah dan sifat lincah yang membuat navigasi di jalan-jalan kota menjadi mudah."
+      ]
+    }
   },
   {
     id: "brv-n7x",
@@ -153,7 +164,14 @@ export const cars: Car[] = [
       "Kabin luas dan nyaman",
       "Pilihan varian lengkap"
     ],
-    rating: 4.7
+    rating: 4.7,
+    overview: {
+      title: "SUV Keluarga yang Stylish dan Tangguh",
+      description: [
+        "Honda BR-V N7X Edition, yang diluncurkan di Indonesia International Motor Show (IIMS) 2024, pada dasarnya adalah versi yang disempurnakan secara kosmetik dari All New Honda BR-V, yang dirancang untuk menarik bagi mereka yang mengagumi mobil konsep N7X. Edisi khusus ini bertujuan untuk memberikan pilihan yang lebih stylish dan elegan di segmen Low SUV (LSUV) yang populer di Indonesia.",
+        "Perbedaan yang paling mencolok pada N7X Edition adalah pilihan warna eksklusif Sand Khaki Pearl, yang sebelumnya hanya tersedia untuk HR-V. Warna ini dimaksudkan untuk memberikan tampilan klasik dan elegan yang tak lekang oleh waktu pada kendaraan."
+      ]
+    }
   },
   {
     id: "accord-rs-ehev",
@@ -200,7 +218,14 @@ export const cars: Car[] = [
       "Interior mewah dengan material premium",
       "Teknologi canggih dan konektivitas lengkap"
     ],
-    rating: 4.9
+    rating: 4.9,
+    overview: {
+      title: "Kemewahan dan Efisiensi dalam Satu Paket",
+      description: [
+        "Honda Accord RS e:HEV telah kembali secara signifikan ke pasar Indonesia, kini sebagai sedan hybrid premium. Fitur unggulan dari Accord baru adalah efisiensi bahan bakarnya yang luar biasa. Selama uji jalan 100 km yang mencakup berbagai kondisi lalu lintas di dalam dan sekitar Jakarta, Accord RS e:HEV mencapai konsumsi bahan bakar rata-rata 25,5 km/liter.",
+        "Meskipun 'RS' mungkin menunjukkan fokus sporty, ulasan menunjukkan bahwa Accord memprioritaskan kenyamanan. Kabinnya senyap dan terisolasi dengan baik, dan suspensinya memberikan pengendaraan yang mulus, meminimalkan body roll. Tenaga gabungan dari mesin bensin dan motor listrik adalah 207 ps, menawarkan performa yang kuat."
+      ]
+    }
   },
   {
     id: "city-sedan",
@@ -246,7 +271,14 @@ export const cars: Car[] = [
       "Performa mesin yang bertenaga",
       "Efisiensi bahan bakar terbaik di kelasnya"
     ],
-    rating: 4.6
+    rating: 4.6,
+    overview: {
+      title: "Elegansi dan Performa untuk Perkotaan",
+      description: [
+        "Honda City Sedan terus menjadi pemain penting di pasar sedan Indonesia, menawarkan perpaduan gaya, performa, dan kepraktisan. Di Indonesia, Honda City Sedan ditawarkan dalam satu varian dengan transmisi continuously variable (CVT).",
+        "Di bawah kapnya, Honda City Sedan ditenagai oleh mesin 1.5 liter DOHC i-VTEC yang menghasilkan tenaga 121 PS dan torsi 145 Nm. Mesin ini dipasangkan dengan CVT yang responsif, yang mencakup paddle shifter untuk pengalaman berkendara yang lebih menarik. Mesin ini dipuji karena bertenaga dan responsif, terutama untuk berkendara di kota."
+      ]
+    }
   },
   {
     id: "city-hatchback",
@@ -300,7 +332,14 @@ export const cars: Car[] = [
       "Ruang kabin luas dengan fleksibilitas hatchback",
       "Performa mesin responsif"
     ],
-    rating: 4.7
+    rating: 4.7,
+    overview: {
+      title: "Hatchback Sporty dengan Fleksibilitas Tinggi",
+      description: [
+        "Honda City Hatchback RS telah membuat gebrakan di pasar otomotif Indonesia, secara efektif menggantikan Honda Jazz yang populer. City Hatchback RS memiliki desain yang sporty dan agresif, dengan garis karakter yang tajam dan lampu depan full LED modern, daytime running lights, dan lampu kabut.",
+        "Di dalam, kabinnya memiliki nuansa sporty dengan skema warna hitam yang dominan dan aksen jahitan merah. Kursi depan dirancang agar sporty dan ergonomis, dan kemudi menawarkan penyesuaian tilt dan teleskopik untuk posisi mengemudi yang nyaman."
+      ]
+    }
   },
   {
     id: "hrv",
@@ -354,7 +393,14 @@ export const cars: Car[] = [
       "Honda SENSING untuk keamanan maksimal",
       "Cocok untuk adventure dan daily use"
     ],
-    rating: 4.8
+    rating: 4.8,
+    overview: {
+      title: "SUV Kompak yang Stylish dan Andal",
+      description: [
+        "Honda HR-V terus menjadi kekuatan dominan di segmen SUV kompak yang kompetitif di Indonesia. Sejak diluncurkan pertama kali pada tahun 2014 dan pengenalan generasi terbarunya pada tahun 2022, HR-V telah menarik berbagai konsumen yang mencari kendaraan yang stylish, praktis, dan andal untuk berkendara di perkotaan maupun jarak jauh.",
+        "Desain eksterior Honda HR-V terbaru menjadi daya tarik utama bagi banyak pembeli. Sering digambarkan sebagai modern, elegan, dan sporty, dengan gril sewarna bodi yang khas dan lampu depan LED ramping yang menciptakan fasia depan yang menawan."
+      ]
+    }
   },
   {
     id: "crv",
@@ -407,7 +453,14 @@ export const cars: Car[] = [
       description: "Hemat hingga 26 juta rupiah untuk pembelian Honda CR-V",
       validUntil: "31 Maret 2024"
     },
-    rating: 4.9
+    rating: 4.9,
+    overview: {
+      title: "SUV Premium dengan Performa dan Kenyamanan Terbaik",
+      description: [
+        "Honda CR-V terus menjadi pilihan populer di pasar SUV Indonesia, mendapatkan pujian atas desainnya yang sporty, pilihan mesin yang bertenaga dan efisien, serta interior yang nyaman dan kaya fitur. Ulasan terbaru dari media otomotif Indonesia menyoroti kemampuan CR-V untuk melayani baik berkendara di perkotaan maupun petualangan.",
+        "Interior CR-V dianggap luas dan mewah, terutama pada varian turbo yang menawarkan konfigurasi tempat duduk tiga baris. Penggunaan kulit pada jok, kemudi, dan tuas persneling, bersama dengan panel kayu di dasbor, menciptakan nuansa premium."
+      ]
+    }
   },
   {
     id: "civic",
@@ -454,7 +507,14 @@ export const cars: Car[] = [
       "Honda SENSING untuk keamanan optimal",
       "Interior premium dengan teknologi terdepan"
     ],
-    rating: 4.9
+    rating: 4.9,
+    overview: {
+      title: "Sedan Sporty dengan Desain dan Performa Terbaik",
+      description: [
+        "Generasi terbaru Honda Civic RS telah mendapatkan perhatian positif di pasar Indonesia, dengan para pengulas memuji estetika sporty dan modernnya, fitur yang ditingkatkan, dan dinamika berkendara yang menarik. Sejak diluncurkan pada Oktober 2021, Civic generasi ke-11, yang ditawarkan secara eksklusif dalam trim RS, telah menjadi pilihan populer di segmen sedan.",
+        "Di bawah kapnya, Honda Civic RS ditenagai oleh mesin 1.5 liter DOHC VTEC Turbo yang dipasangkan dengan transmisi CVT, menghasilkan 176 tenaga kuda dan torsi 240 Nm. Powertrain ini dipuji karena bertenaga dan efisien, dengan konsumsi bahan bakar rata-rata sekitar 15 km/liter."
+      ]
+    }
   },
 ];
 

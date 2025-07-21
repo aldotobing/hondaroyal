@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { ArrowLeft, Phone, Shield, Fuel, Users, Settings, Camera, CheckCircle, Star, Car, Share2 } from 'lucide-react';
+import { ArrowLeft, Phone, Shield, Fuel, Users, Settings, Camera, CheckCircle, Star, Car, Share2, Gauge } from 'lucide-react';
 import { shareContent } from '../utils/shareUtils';
 import { getCarById } from '../data/cars';
 import CarVariantSelector from '../components/CarVariantSelector';
 import SEO from '../components/SEO';
 import { compressImage } from '../utils/imageCompressor';
+import RelatedCars from '../components/RelatedCars';
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -86,48 +87,50 @@ const CarDetail = () => {
           <span className="text-gray-900 font-medium truncate max-w-[200px] sm:max-w-none">{car.name}</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mb-10 sm:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 mb-10 sm:mb-12">
           {/* Image Gallery */}
-          <div className="lg:col-span-2 space-y-3 sm:space-y-4">
+          <div className="lg:col-span-3 space-y-4">
             <div className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg group">
               <img
                 src={compressedImages[selectedImage] || car.images.gallery[selectedImage]}
                 alt={`${car.name} - Image ${selectedImage + 1}`}
-                className="w-full h-64 sm:h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 aspect-[4/3]"
                 loading="eager"
               />
               {hasPromo && (
-                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-gradient-to-r from-red-600 to-red-500 text-white px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-bold tracking-wide shadow-lg">
+                <div className="absolute top-4 left-4 bg-gradient-to-r from-red-600 to-red-500 text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wide shadow-lg">
                   PROMO SPESIAL!
                 </div>
               )}
             </div>
             
-            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-4 gap-1.5 sm:gap-2">
+            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
               {car.images.gallery.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative rounded-lg overflow-hidden aspect-square transition-all ${
+                  className={`relative rounded-lg overflow-hidden aspect-square transition-all duration-200 ${
                     selectedImage === index 
-                      ? 'ring-2 ring-red-600 scale-[1.02]' 
-                      : 'hover:ring-1 hover:ring-gray-300'
+                      ? 'ring-2 ring-offset-2 ring-red-600 scale-105' 
+                      : 'hover:scale-105'
                   }`}
                   aria-label={`Lihat gambar ${index + 1} dari ${car.images.gallery.length}`}
                 >
                   <img
                     src={compressedImages[index] || image}
                     alt={`${car.name} thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                    className="w-full h-full object-cover"
                     loading="lazy"
                   />
+                  <div className={`absolute inset-0 bg-black/50 transition-opacity duration-200 ${selectedImage === index ? 'opacity-0' : 'opacity-40 group-hover:opacity-10'}`}></div>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Car Info & Variant Selector */}
-          <div className="space-y-4 sm:space-y-6">
+          {/* Car Info, Variants, and Tabs */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Car Info */}
             <div>
               <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                 <span className="bg-red-50 text-red-700 px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium border border-red-100">
@@ -135,9 +138,9 @@ const CarDetail = () => {
                 </span>
                 <div className="flex items-center space-x-0.5 sm:space-x-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
+                    <Star key={i} className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${car.rating && i < Math.round(car.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} />
                   ))}
-                  <span className="text-xs sm:text-sm text-gray-600 ml-0.5">4.8/5</span>
+                  {car.rating && <span className="text-xs sm:text-sm text-gray-600 ml-0.5">{car.rating.toFixed(1)}/5</span>}
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 sm:mb-4">
@@ -158,12 +161,12 @@ const CarDetail = () => {
             {/* Quick Specs */}
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
-                <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <Gauge className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
                 <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Mesin</div>
                 <div className="text-sm sm:text-base font-semibold text-gray-900">{car.engine}</div>
               </div>
               <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
-                <Fuel className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <Settings className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
                 <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Transmisi</div>
                 <div className="text-sm sm:text-base font-semibold text-gray-900">{car.transmission}</div>
               </div>
@@ -173,7 +176,7 @@ const CarDetail = () => {
                 <div className="text-sm sm:text-base font-semibold text-gray-900">{car.seating} Orang</div>
               </div>
               <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center shadow-md hover:shadow-lg transition-shadow">
-                <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
+                <Fuel className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 mx-auto mb-1.5 sm:mb-2" />
                 <div className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">Bahan Bakar</div>
                 <div className="text-sm sm:text-base font-semibold text-gray-900">{car.fuel_type}</div>
               </div>
@@ -209,7 +212,7 @@ const CarDetail = () => {
         </div>
 
         {/* Detailed Information Tabs */}
-        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden mt-8 sm:mt-10">
+        <div className="lg:col-span-5 bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden mt-8 sm:mt-10">
           {/* Tab Navigation */}
           <div className="border-b border-gray-200 overflow-x-auto">
             <nav className="flex px-4 sm:px-6 min-w-max">
@@ -233,57 +236,22 @@ const CarDetail = () => {
 
           {/* Tab Content */}
           <div className="p-6">
-            {activeTab === 'overview' && (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Keunggulan {car.name}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {car.highlights.map((highlight, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">{highlight}</span>
-                      </div>
-                    ))}
+            {activeTab === 'overview' && car.overview && (
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">{car.overview.title}</h3>
+                      {car.overview.description.map((paragraph, index) => (
+                        <p key={index} className="text-gray-700 mb-3 last:mb-0">{paragraph}</p>
+                      ))}
+                    </div>
                   </div>
-                </div>
-
-                {/* Variants Overview */}
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">Varian Tersedia</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {car.variants.map((variant, index) => (
-                      <div key={index} className="bg-gray-50 rounded-lg p-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-semibold text-gray-900">{variant.name}</h4>
-                          <div className="text-right">
-                            {variant.promo_price ? (
-                              <div>
-                                <div className="text-sm text-gray-500 line-through">{variant.price}</div>
-                                <div className="text-lg font-bold text-red-600">{variant.promo_price}</div>
-                              </div>
-                            ) : (
-                              <div className="text-lg font-bold text-gray-900">{variant.price}</div>
-                            )}
-                          </div>
-                        </div>
-                        {variant.features && (
-                          <div className="text-sm text-gray-600">
-                            {variant.features.slice(0, 3).join(', ')}
-                            {variant.features.length > 3 && '...'}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
+                )}
 
             {activeTab === 'specs' && (
               <div className="space-y-6">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Spesifikasi Mesin</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-3">
                       <div className="flex justify-between py-2 border-b border-gray-100">
                         <span className="text-gray-600">Tipe Mesin</span>
@@ -293,6 +261,8 @@ const CarDetail = () => {
                         <span className="text-gray-600">Transmisi</span>
                         <span className="font-semibold">{car.transmission}</span>
                       </div>
+                    </div>
+                    <div className="space-y-3">
                       <div className="flex justify-between py-2 border-b border-gray-100">
                         <span className="text-gray-600">Bahan Bakar</span>
                         <span className="font-semibold">{car.fuel_type}</span>
@@ -363,7 +333,7 @@ const CarDetail = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl text-white p-8 mt-12 text-center">
+        <div className="lg:col-span-5 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl text-white p-8 mt-12 text-center">
           <h2 className="text-2xl lg:text-3xl font-bold mb-4">
             Tertarik dengan {car.name}?
           </h2>
@@ -387,6 +357,11 @@ const CarDetail = () => {
               Kunjungi Showroom
             </Link>
           </div>
+        </div>
+
+        {/* Related Cars Section */}
+        <div className="lg:col-span-5 mt-12">
+          <RelatedCars currentCar={car} />
         </div>
       </div>
     </div>
