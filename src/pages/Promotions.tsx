@@ -20,17 +20,24 @@ const Promotions = () => {
 
   const handleShare = async (promo: Promotion) => {
     const shareUrl = `${BASE_URL}?promoId=${promo.id}`;
-    const absoluteImageUrl = `${window.location.origin}${promo.image.startsWith('/') ? promo.image : `/${promo.image}`}`;
+    
+    // Ensure the image URL is properly formatted
+    let imageUrl = promo.image;
+    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('data:')) {
+      // Remove leading slash if present to avoid double slashes
+      const cleanPath = imageUrl.startsWith('/') ? imageUrl.slice(1) : imageUrl;
+      imageUrl = `${window.location.origin}/${cleanPath}`;
+    }
     
     // Update meta tags for social sharing
-    updateMetaTags(promo.title, promo.description, absoluteImageUrl, shareUrl);
+    updateMetaTags(promo.title, promo.description, imageUrl, shareUrl);
     
-    // Share with image
+    // Share with image preview
     await shareContent(
       promo.title,
       promo.description,
       shareUrl,
-      absoluteImageUrl // Pass the image URL for sharing
+      imageUrl
     );
   };
   // Get cars that have promotions

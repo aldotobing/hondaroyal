@@ -39,17 +39,31 @@ export const shareContent = async (title: string, text: string, url: string, ima
 };
 
 export const updateMetaTags = (title: string, description: string, imageUrl: string, url: string) => {
+  // Ensure image URL is absolute and has cache buster
+  const timestamp = new Date().getTime();
+  const fullImageUrl = imageUrl.startsWith('http') 
+    ? imageUrl 
+    : `${window.location.origin}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+  const imageWithCacheBuster = `${fullImageUrl}${fullImageUrl.includes('?') ? '&' : '?'}t=${timestamp}`;
+
   // Update or create meta tags for social sharing
   const metaTags = [
+    // Basic meta tags
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
-    { property: 'og:image', content: imageUrl },
+    { property: 'og:image', content: imageWithCacheBuster },
     { property: 'og:url', content: url },
     { property: 'og:type', content: 'website' },
+    
+    // Twitter card meta tags
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
-    { name: 'twitter:image', content: imageUrl },
+    { name: 'twitter:image', content: imageWithCacheBuster },
+    
+    // Additional recommended meta tags
+    { name: 'description', content: description },
+    { name: 'image', content: imageWithCacheBuster },
   ];
 
   metaTags.forEach((tag) => {
