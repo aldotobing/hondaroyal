@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Car, Phone, Mail, MapPin } from "lucide-react";
 import WhatsAppButton from "./WhatsAppButton";
@@ -84,14 +84,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const navigation = [
-    { name: "Beranda", href: "/" },
-    { name: "Katalog Mobil", href: "/katalog" },
-    { name: "Galeri", href: "/galeri" },
-    { name: "Promo", href: "/promo" },
-    { name: "Tentang Kami", href: "/tentang" },
-    { name: "Kontak", href: "/kontak" },
-  ];
+  const navigation = useMemo(
+    () => [
+      { name: "Beranda", href: "/" },
+      { name: "Katalog Mobil", href: "/katalog" },
+      { name: "Galeri", href: "/galeri" },
+      { name: "Promo", href: "/promo" },
+      { name: "Tentang Kami", href: "/tentang" },
+      { name: "Kontak", href: "/kontak" },
+    ],
+    []
+  );
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -109,7 +112,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         `Temukan mobil Honda impian Anda di Honda Royal Wiyung - ${pageTitle}. Dapatkan promo dan layanan terbaik untuk kendaraan Honda Anda.`
       );
     }
-  }, [location]);
+  }, [location, navigation]);
 
   const { website, organization } = generateStructuredData(location.pathname);
 
