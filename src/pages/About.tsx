@@ -11,7 +11,7 @@ const About = () => {
     },
     {
       icon: Users,
-      number: "2500+",
+      number: "1000+",
       label: "Pelanggan Puas",
       description: "Kepercayaan pelanggan adalah kebanggaan kami"
     },
@@ -122,7 +122,7 @@ const About = () => {
                 Kami tidak hanya menjual mobil, tetapi membangun hubungan jangka panjang dengan pelanggan. Setiap Honda yang kami jual disertai dengan komitmen layanan purna jual terbaik dan dukungan penuh dari tim ahli kami.
               </p>
               <p>
-                Dipimpin oleh sales executive berpengalaman, <strong>Sayuti</strong>, yang telah membantu lebih dari 2500 keluarga Indonesia mendapatkan Honda impian mereka dengan pelayanan yang ramah, profesional, dan terpercaya.
+                Dipimpin oleh sales executive berpengalaman, <strong>Sayuti</strong>, yang telah membantu lebih dari 1000 keluarga Indonesia mendapatkan Honda impian mereka dengan pelayanan yang ramah, profesional, dan terpercaya.
               </p>
             </div>
           </div>
