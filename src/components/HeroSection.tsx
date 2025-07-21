@@ -10,9 +10,9 @@ const HeroSection = () => {
   const intervalRef = useRef<number>();
 
   const heroBanners = [
+    '/hero_banner.jpg',
     '/hero_banner_2.jpg',
-    '/hero_banner_4.jpg',
-    '/hero_banner_5.jpg',
+    '/hero_banner_3.jpg',
   ];
 
   const goToBanner = useCallback((index: number) => {

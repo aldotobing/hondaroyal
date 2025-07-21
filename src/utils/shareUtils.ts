@@ -1,5 +1,19 @@
-export const shareContent = async (title: string, text: string, url: string) => {
-  const shareData = {
+// Define ShareData type for TypeScript
+type ShareData = {
+  title?: string;
+  text?: string;
+  url?: string;
+  files?: File[];
+};
+
+export const shareContent = async (title: string, text: string, url: string, imageUrl?: string) => {
+  // First, update meta tags for rich link previews
+  if (imageUrl) {
+    updateMetaTags(title, text, imageUrl, url);
+  }
+  
+  // Then prepare the share data
+  const shareData: ShareData = {
     title: title,
     text: text,
     url: url,
@@ -8,13 +22,19 @@ export const shareContent = async (title: string, text: string, url: string) => 
   try {
     if (navigator.share) {
       await navigator.share(shareData);
-    } else {
+    } else if (navigator.clipboard) {
       // Fallback for browsers that don't support Web Share API
-      await navigator.clipboard.writeText(url);
-      alert('Link berhasil disalin ke clipboard!');
+      await navigator.clipboard.writeText(`${title}\n\n${text}\n\n${url}`);
+      alert('Link promo berhasil disalin ke clipboard!');
+    } else {
+      // Fallback for very old browsers
+      prompt('Salin teks berikut untuk membagikan promo:', `${title}\n\n${text}\n\n${url}`);
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error sharing:', error);
+    if (error instanceof Error && error.name !== 'AbortError') {
+      alert('Gagal membagikan promo. Silakan coba lagi.');
+    }
   }
 };
 
