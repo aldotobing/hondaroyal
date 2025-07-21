@@ -128,9 +128,9 @@ const About = () => {
           </div>
           <div className="relative">
             <img
-              src="https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Honda Showroom"
-              className="w-full rounded-2xl shadow-2xl"
+              src="/cars/honda_hrv_3.jpg"
+              alt="Honda HR-V"
+              className="w-full h-auto rounded-2xl shadow-2xl object-cover"
             />
             <div className="absolute -bottom-6 -left-6 bg-red-600 text-white p-6 rounded-2xl shadow-xl">
               <div className="text-2xl font-bold">15+</div>

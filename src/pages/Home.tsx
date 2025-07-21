@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Users, Star, CheckCircle, Phone } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, Shield, Award, Users, Star, CheckCircle, Phone, Car, Tag, Image as ImageIcon, CarFront } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cars, getCarsWithPromo } from '../data/cars';
 import CarCard from '../components/CarCard';
 import AnimatedSection from '../components/AnimatedSection';
@@ -35,10 +35,10 @@ const Home = () => {
       clearInterval(intervalRef.current);
     }
     
-    // Set new interval
+    // Set new interval with longer duration
     intervalRef.current = window.setInterval(() => {
       goToNextBanner();
-    }, 5000);
+    }, 10000); // Increased to 10 seconds for even slower transitions
 
     // Clear interval on unmount or when dependencies change
     return () => {
@@ -113,90 +113,157 @@ const Home = () => {
       />
       {/* Hero Section */}
       <AnimatedSection className="w-full">
-        <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden">
+        <section className="relative min-h-[60vh] md:min-h-[70vh] flex items-center bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden">
           {/* Car Image */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full max-w-[2000px] mx-auto">
-                <img 
-                  src={heroBanners[currentBanner]} 
-                  alt="Honda Showcase" 
-                  className="w-full h-full object-cover object-center scale-110 transition-transform duration-1000 ease-in-out"
-                  style={{ transform: 'scale(1.1) translateY(5%)' }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative w-full h-full max-w-[2000px] mx-auto">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentBanner}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 2, ease: [0.2, 0, 0, 1] }}
+                      className="absolute inset-0 w-full h-full"
+                    >
+                      <img 
+                        src={heroBanners[currentBanner]} 
+                        alt="Honda Showcase" 
+                        className="w-full h-full object-cover object-center scale-110"
+                        style={{ transform: 'scale(1.2) translateY(0)' }}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                  <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/70 to-transparent"></div>
+                </div>
               </div>
-            </div>
           </div>
           
           {/* Dynamic Background Pattern */}
-          <div className="absolute inset-0 opacity-30">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(239,68,68,0.3),transparent_50%)]"></div>
+          <div className="absolute inset-0 opacity-20 md:opacity-30">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(239,68,68,0.2),transparent_50%)]"></div>
             <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,rgba(239,68,68,0.1)_180deg,transparent_360deg)] animate-spin" style={{animationDuration: '20s'}}></div>
           </div>
           
-          {/* Animated Grid */}
-          <div className="absolute inset-0 opacity-20">
+          {/* Animated Grid - Removed on mobile */}
+          <div className="hidden md:block absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px] animate-pulse"></div>
           </div>
 
-          {/* Floating Elements */}
-          <div className="absolute top-20 left-10 w-32 h-32 bg-red-500/20 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-blue-500/20 rounded-full blur-lg animate-pulse delay-1000"></div>
-          <div className="absolute bottom-32 left-20 w-40 h-40 bg-purple-500/20 rounded-full blur-2xl animate-pulse delay-2000"></div>
+          {/* Floating Elements - Smaller and fewer on mobile */}
+          <div className="absolute top-8 left-4 w-16 h-16 md:top-20 md:left-10 md:w-32 md:h-32 bg-red-500/20 rounded-full blur-xl animate-pulse"></div>
+          <div className="hidden md:block absolute top-20 right-10 w-24 h-24 bg-blue-500/20 rounded-full blur-lg animate-pulse delay-1000"></div>
+          <div className="absolute bottom-12 left-4 w-20 h-20 md:bottom-32 md:left-10 md:w-40 md:h-40 bg-purple-500/20 rounded-full blur-2xl animate-pulse delay-2000"></div>
           
           {/* Main Content */}
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 lg:py-24">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
               {/* Left Content */}
-              <div className="space-y-12">
-                <div className="space-y-8">
-                  {/* Badge */}
-                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-red-500/20 to-red-600/20 border border-red-500/30 backdrop-blur-sm">
-                    <div className="w-2 h-2 bg-red-400 rounded-full mr-3 animate-pulse"></div>
-                    <span className="text-red-300 text-sm font-medium">Honda Premium Dealer</span>
+              <div className="space-y-4 md:space-y-6">
+                <div className="space-y-3 md:space-y-4">
+                  {/* Badge - Smaller on mobile */}
+                  <div className="inline-flex items-center px-2.5 py-1 md:px-3 md:py-1.5 rounded-full bg-gradient-to-r from-red-500/20 to-red-600/20 border border-red-500/30 backdrop-blur-sm">
+                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full mr-1.5 md:mr-2 animate-pulse"></div>
+                    <span className="text-red-300 text-xs font-medium">Honda Premium Dealer</span>
                   </div>
 
-                  <h1 className="text-5xl lg:text-7xl font-black leading-tight tracking-tight">
-                    Temukan Mobil Honda Impian Anda
-                  </h1>
-                  
-                  <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-2xl animate-[fadeInUp_0.6s_ease-out_0.6s_both] opacity-0">
-                    Rasakan pengalaman berkendara premium dengan teknologi terdepan, 
-                    <span className="text-red-300 font-semibold"> kualitas terpercaya</span>, 
-                    dan layanan purna jual terbaik untuk keluarga Indonesia
-                  </p>
+                  <div className="space-y-6">
+                    <div>
+                      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-black leading-tight tracking-tight">
+                        Mobil Honda <span className="text-red-400">Impian</span> Anda
+                        <br />
+                        <span className="text-xl sm:text-2xl md:text-3xl font-medium text-gray-300 mt-2 block">
+                          Hanya di <span className="text-white font-bold">Honda Royal</span>
+                        </span>
+                      </h1>
+                      
+                      <p className="mt-4 text-base sm:text-lg text-gray-300 leading-relaxed max-w-2xl animate-[fadeInUp_0.6s_ease-out_0.6s_both] opacity-0">
+                        Rasakan pengalaman berkendara premium dengan teknologi terdepan, 
+                        kualitas terpercaya, dan layanan purna jual terbaik di kelasnya.
+                      </p>
+                    </div>
+
+                    {/* Key Features */}
+                    <div className="grid grid-cols-2 gap-4 max-w-md">
+                      <div className="flex items-center bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/5">
+                        <div className="bg-red-500/10 p-2 rounded-lg mr-3">
+                          <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-white">Garansi Resmi</div>
+                          <div className="text-xs text-gray-400">Honda Indonesia</div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/5">
+                        <div className="bg-red-500/10 p-2 rounded-lg mr-3">
+                          <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-white">DP Ringan</div>
+                          <div className="text-xs text-gray-400">Mulai 10%</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* CTA Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                      <Link 
+                        to="/katalog" 
+                        className="flex-1 flex items-center justify-center px-6 py-3.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-red-500/20"
+                      >
+                        Lihat Semua Mobil
+                        <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </Link>
+                      <a 
+                        href="tel:+6281234567890" 
+                        className="flex-1 flex items-center justify-center px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-medium rounded-lg border border-white/10 transition-all duration-200"
+                      >
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>Call Now</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-6 animate-[fadeInUp_0.6s_ease-out_0.8s_both] opacity-0">
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 animate-[fadeInUp_0.6s_ease-out_0.8s_both] opacity-0">
                   <Link
                     to="/katalog"
-                    className="group relative bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-500 flex items-center justify-center space-x-3 transform hover:scale-105 hover:-translate-y-1 shadow-2xl hover:shadow-red-500/25 overflow-hidden"
+                    className="group relative bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 rounded-xl md:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-500 flex items-center justify-center space-x-2 sm:space-x-3 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-red-500/25 overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                     <span className="relative z-10">Lihat Katalog</span>
-                    <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
                   </Link>
                   <a
                     href="https://wa.me/6285936562657?text=Halo%20Kak%20Sayuti%2C%20saya%20tertarik%20dengan%20mobil%20Honda.%20Bisa%20minta%20info%20lebih%20lanjut%3F"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all duration-500 flex items-center justify-center space-x-3 transform hover:scale-105 hover:-translate-y-1 shadow-2xl hover:shadow-green-500/25 overflow-hidden"
+                    className="group relative bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 rounded-xl md:rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-all duration-500 flex items-center justify-center space-x-2 sm:space-x-3 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-green-500/25 overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    <Phone className="w-6 h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 relative z-10 group-hover:rotate-12 transition-transform duration-300" />
                     <span className="relative z-10">Chat Sayuti</span>
                   </a>
                 </div>
 
                 {/* Stats */}
-                <div className="flex items-center justify-between pt-8 animate-[fadeInUp_0.6s_ease-out_1s_both] opacity-0">
+                <div className="flex items-center justify-between pt-4 md:pt-6 animate-[fadeInUp_0.6s_ease-out_1s_both] opacity-0">
                   <div className="text-center group">
-                    <div className="text-4xl font-black bg-gradient-to-br from-red-400 to-red-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
+                    <div className="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-br from-red-400 to-red-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
                       {cars.length}+
                     </div>
-                    <div className="text-sm text-gray-400 font-medium mt-1">Model Tersedia</div>
+                    <div className="text-xs sm:text-sm text-gray-400 font-medium mt-1">Model Tersedia</div>
                   </div>
                   <div className="text-center group">
                     <div className="text-4xl font-black bg-gradient-to-br from-red-400 to-red-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">
@@ -351,43 +418,48 @@ const Home = () => {
         </div>
       </AnimatedSection>
 
-      {/* Explore Pages Section */}
-      <AnimatedSection className="py-20 bg-white">
+      {/* Quick Links Section */}
+      <AnimatedSection className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Jelajahi Lebih Lanjut
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Temukan informasi lengkap tentang Honda Royal
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-            <Link to="/katalog" className="flex flex-col items-center p-6 rounded-2xl bg-red-50 hover:bg-red-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
-              <img src="/city.jpg" alt="Katalog" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Katalog</h3>
-              <p className="text-gray-600 text-center">Lihat semua model mobil Honda</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <Link to="/katalog" className="group p-6 rounded-xl bg-white hover:bg-red-50 transition-colors duration-200 border border-gray-100 hover:border-red-100">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-red-50 group-hover:bg-red-100 flex items-center justify-center mb-4 transition-colors duration-200">
+                  <Car className="w-8 h-8 text-red-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Katalog</h3>
+                <p className="text-sm text-gray-600">Lihat semua model mobil Honda</p>
+              </div>
             </Link>
-            <Link to="/promo" className="flex flex-col items-center p-6 rounded-2xl bg-blue-50 hover:bg-blue-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
-              <img src="/BRVnx7.jpg" alt="Promo" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Promo</h3>
-              <p className="text-gray-600 text-center">Dapatkan penawaran terbaik</p>
+            
+            <Link to="/promo" className="group p-6 rounded-xl bg-white hover:bg-blue-50 transition-colors duration-200 border border-gray-100 hover:border-blue-100">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center mb-4 transition-colors duration-200">
+                  <Tag className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Promo</h3>
+                <p className="text-sm text-gray-600">Dapatkan penawaran terbaik</p>
+              </div>
             </Link>
-            <Link to="/galeri" className="flex flex-col items-center p-6 rounded-2xl bg-green-50 hover:bg-green-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
-              <img src="/civicrs.jpg" alt="Galeri" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Galeri</h3>
-              <p className="text-gray-600 text-center">Lihat koleksi foto mobil Honda</p>
+            
+            <Link to="/galeri" className="group p-6 rounded-xl bg-white hover:bg-green-50 transition-colors duration-200 border border-gray-100 hover:border-green-100">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-green-50 group-hover:bg-green-100 flex items-center justify-center mb-4 transition-colors duration-200">
+                  <ImageIcon className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Galeri</h3>
+                <p className="text-sm text-gray-600">Lihat koleksi foto mobil</p>
+              </div>
             </Link>
-            <Link to="/tentang" className="flex flex-col items-center p-6 rounded-2xl bg-yellow-50 hover:bg-yellow-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
-              <img src="/accord.jpg" alt="Tentang Kami" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Tentang Kami</h3>
-              <p className="text-gray-600 text-center">Kenali Honda Royal lebih dekat</p>
-            </Link>
-            <Link to="/kontak" className="flex flex-col items-center p-6 rounded-2xl bg-purple-50 hover:bg-purple-100 transition-all duration-300 transform hover:-translate-y-2 shadow-md hover:shadow-lg">
-              <img src="/city_hatchback.jpg" alt="Kontak" className="w-24 h-24 object-cover rounded-full mb-4 shadow-md" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Kontak</h3>
-              <p className="text-gray-600 text-center">Hubungi kami sekarang</p>
+            
+            <Link to="/test-drive" className="group p-6 rounded-xl bg-white hover:bg-amber-50 transition-colors duration-200 border border-gray-100 hover:border-amber-100">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-amber-50 group-hover:bg-amber-100 flex items-center justify-center mb-4 transition-colors duration-200">
+                  <CarFront className="w-8 h-8 text-amber-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Test Drive</h3>
+                <p className="text-sm text-gray-600">Jadwalkan test drive</p>
+              </div>
             </Link>
           </div>
         </div>
@@ -419,41 +491,6 @@ const Home = () => {
         </div>
       </AnimatedSection>
 
-      {/* About Honda Royal Section */}
-      <AnimatedSection className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Tentang Honda Royal
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Dealer Resmi Honda Terpercaya untuk Kebutuhan Otomotif Anda
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                Honda Royal adalah dealer resmi mobil Honda terkemuka di Indonesia, berkomitmen untuk menyediakan pengalaman kepemilikan mobil yang luar biasa bagi setiap pelanggan. Dengan dedikasi terhadap kualitas, inovasi, dan kepuasan pelanggan, kami menawarkan rangkaian lengkap mobil Honda terbaru yang dirancang untuk memenuhi berbagai gaya hidup dan kebutuhan.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                Kami memahami bahwa membeli mobil adalah investasi besar, oleh karena itu tim profesional kami siap membantu Anda di setiap langkah, mulai dari pemilihan model yang tepat, penawaran harga terbaik, hingga layanan purna jual yang komprehensif. Kami bangga menjadi bagian dari jaringan Honda yang luas, memastikan Anda mendapatkan dukungan dan suku cadang asli di seluruh Indonesia.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                Di Honda Royal, kami tidak hanya menjual mobil; kami membangun hubungan jangka panjang dengan pelanggan kami. Kunjungi showroom kami hari ini atau hubungi sales representative kami untuk merasakan langsung perbedaan Honda Royal. Dapatkan penawaran eksklusif, cicilan ringan, dan berbagai promo menarik yang hanya bisa Anda temukan di sini. Percayakan kebutuhan mobil Honda Anda kepada kami, dan rasakan kenyamanan serta keamanan berkendara bersama keluarga tercinta.
-              </p>
-            </div>
-            <div className="relative">
-              <img src="/hero_banner.jpg" alt="About Honda Royal" className="rounded-2xl shadow-xl w-full h-auto object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
-              <div className="absolute bottom-6 left-6 text-white">
-                <h3 className="text-2xl font-bold">Pengalaman Terbaik</h3>
-                <p className="text-lg">Layanan profesional dan terpercaya</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
 
       {/* Testimonials Section */}
       <AnimatedSection className="py-20 bg-white">

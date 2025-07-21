@@ -10,9 +10,10 @@ const generateStructuredData = (pathname: string) => {
   
   const website = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
+    "@type": "WebPage",
     "name": "Honda Royal Wiyung",
-    "url": baseUrl,
+    "url": currentUrl,
+    "mainEntityOfPage": currentUrl,
     "potentialAction": {
       "@type": "SearchAction",
       "target": `${baseUrl}/katalog?search={search_term_string}`,

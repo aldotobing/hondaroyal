@@ -1,73 +1,106 @@
-import { Calendar, Gift, Percent, CreditCard, Phone, CheckCircle, Clock } from 'lucide-react';
+import { Gift, Percent, CheckCircle, Clock, CreditCard, Phone } from 'lucide-react';
 import SEO from '../components/SEO';
+import { getCarsWithPromo, type Car } from '../data/cars';
+
+interface Promotion {
+  id: string | number;
+  title: string;
+  description: string;
+  discount: string;
+  validUntil: string;
+  terms: string[];
+  image: string;
+  badge: string;
+  color: 'red' | 'green' | 'blue' | 'yellow' | 'purple';
+}
 
 const Promotions = () => {
-  const promos = [
-    {
-      id: 1,
-      title: "Promo Tahun Baru 2024",
-      description: "Dapatkan diskon hingga 15 juta rupiah untuk pembelian Honda CR-V dan Honda Civic",
-      discount: "Hingga Rp 15.000.000",
-      validUntil: "31 Januari 2024",
+  // Get cars that have promotions
+  const promoProducts = getCarsWithPromo();
+
+  // Format price to IDR
+  const formatPrice = (price: string) => {
+    return price.replace('Rp ', '').replace(/\./g, '');
+  };
+
+  // Calculate discount percentage
+  const getDiscountPercentage = (car: Car) => {
+    const variant = car.variants.find(v => v.promo_price);
+    if (!variant || !variant.price || !variant.promo_price) return 0;
+    
+    const price = parseInt(formatPrice(variant.price));
+    const promoPrice = parseInt(formatPrice(variant.promo_price));
+    const discount = ((price - promoPrice) / price) * 100;
+    
+    return Math.round(discount);
+  };
+
+  // Get the variant with the best promotion
+  const getBestVariant = (car: Car) => {
+    return car.variants.find((v) => v.promo_price) || car.variants[0];
+  };
+
+  // Create promotions from car data
+  const carPromotions: Promotion[] = promoProducts.map(car => {
+    const bestVariant = getBestVariant(car);
+    const discount = getDiscountPercentage(car);
+    
+    return {
+      id: car.id,
+      title: `Promo Spesial ${car.name}`,
+      description: `Dapatkan penawaran terbaik untuk ${car.name} dengan diskon dan fasilitas menarik`,
+      discount: `${discount}% OFF`,
+      validUntil: "31 Desember 2024",
       terms: [
-        "Berlaku untuk pembelian cash dan kredit",
-        "Tidak dapat digabung dengan promo lain",
-        "Stok terbatas",
-        "Syarat dan ketentuan berlaku"
+        `Harga mulai dari ${bestVariant.promo_price || bestVariant.price}`,
+        "Gratis biaya admin",
+        "Gratis asuransi 1 tahun",
+        "Gratis service 3x kunjungan"
       ],
-      image: "https://images.pexels.com/photos/1119796/pexels-photo-1119796.jpeg?auto=compress&cs=tinysrgb&w=800",
-      badge: "HOT DEAL",
-      color: "red"
-    },
+      image: car.images?.main || '/images/car-placeholder.jpg',
+      badge: "PROMO",
+      color: "blue"
+    };
+  });
+
+  // Fallback promos if no cars have promotions
+  const defaultPromos: Promotion[] = [
     {
-      id: 2,
-      title: "DP Ringan Honda Brio",
-      description: "DP mulai dari 10 juta saja untuk Honda Brio dan Honda Jazz dengan cicilan terjangkau",
-      discount: "DP Mulai 10 Juta",
-      validUntil: "28 Februari 2024",
+      id: 'trade-in',
+      title: "Program Tukar Tambah Spesial",
+      description: "Dapatkan nilai tukar tambah terbaik untuk mobil lama Anda",
+      discount: "Nilai Tukar Tinggi",
+      validUntil: "31 Desember 2024",
       terms: [
-        "DP mulai dari Rp 10.000.000",
-        "Cicilan mulai dari Rp 3.5 juta/bulan",
-        "Tenor hingga 5 tahun",
-        "Bunga kompetitif mulai 6.8%"
-      ],
-      image: "https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=800",
-      badge: "BEST SELLER",
-      color: "green"
-    },
-    {
-      id: 3,
-      title: "Trade-In Terbaik Semester 1",
-      description: "Tukar tambah mobil lama Anda dengan harga terbaik dan dapatkan bonus spesial",
-      discount: "Bonus Hingga 5 Juta",
-      validUntil: "30 Juni 2024",
-      terms: [
-        "Berlaku untuk semua merek mobil",
         "Penilaian gratis dan transparan",
-        "Bonus hingga Rp 5.000.000",
-        "Proses cepat maksimal 3 hari"
+        "Proses cepat & mudah",
+        "Berlaku untuk semua merek mobil",
+        "Dapatkan tambahan diskon khusus"
       ],
-      image: "https://images.pexels.com/photos/1335077/pexels-photo-1335077.jpeg?auto=compress&cs=tinysrgb&w=800",
-      badge: "LIMITED TIME",
+      image: "/promo/trade-in.jpg",
+      badge: "TRADE-IN",
       color: "blue"
     },
     {
-      id: 4,
-      title: "Cicilan 0% Honda HR-V",
-      description: "Kesempatan terbatas! Cicilan 0% untuk Honda HR-V dengan tenor tertentu",
-      discount: "Bunga 0%",
-      validUntil: "15 Maret 2024",
+      id: 'dp-ringan',
+      title: "DP Ringan & Cicilan Ringan",
+      description: "Nikmati kemudahan kepemilikan mobil baru dengan DP ringan dan cicilan terjangkau",
+      discount: "DP Mulai 10%",
+      validUntil: "31 Desember 2024",
       terms: [
-        "Bunga 0% untuk tenor 2 tahun",
-        "DP minimal 30%",
-        "Berlaku untuk Honda HR-V semua tipe",
-        "Proses approval cepat"
+        "DP mulai dari 10%",
+        "Bunga kompetitif mulai 6.8%",
+        "Tenor hingga 7 tahun",
+        "Proses cepat & mudah"
       ],
-      image: "https://images.pexels.com/photos/2127022/pexels-photo-2127022.jpeg?auto=compress&cs=tinysrgb&w=800",
-      badge: "EXCLUSIVE",
-      color: "purple"
+      image: "/promo/dp-ringan.jpg",
+      badge: "KREDIT",
+      color: "green"
     }
   ];
+
+  // Use car promotions if available, otherwise use default promos
+  const activePromotions = carPromotions.length > 0 ? carPromotions : defaultPromos;
 
   const benefits = [
     {
@@ -87,13 +120,16 @@ const Promotions = () => {
     }
   ];
 
+  // Remove unused PromoBadge component to fix lint warning
+
   const getBadgeColor = (color: string) => {
     switch (color) {
       case 'red': return 'bg-red-500';
       case 'green': return 'bg-green-500';
       case 'blue': return 'bg-blue-500';
+      case 'yellow': return 'bg-yellow-500';
       case 'purple': return 'bg-purple-500';
-      default: return 'bg-red-500';
+      default: return 'bg-gray-500';
     }
   };
 
@@ -118,13 +154,17 @@ const Promotions = () => {
 
         {/* Current Promotions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {promos.map((promo) => (
+          {activePromotions.map((promo: Promotion) => (
             <div key={promo.id} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="relative">
+              <div className="relative h-48 bg-gray-100">
                 <img
                   src={promo.image}
                   alt={promo.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/images/car-placeholder.jpg';
+                  }}
                 />
                 <div className={`absolute top-4 left-4 ${getBadgeColor(promo.color)} text-white px-3 py-1 rounded-full text-sm font-bold`}>
                   {promo.badge}
@@ -148,7 +188,7 @@ const Promotions = () => {
                 <div className="mb-6">
                   <h4 className="font-semibold text-gray-900 mb-3">Syarat & Ketentuan:</h4>
                   <ul className="space-y-2">
-                    {promo.terms.map((term, index) => (
+                    {promo.terms.map((term: string, index: number) => (
                       <li key={index} className="flex items-start space-x-2 text-sm text-gray-600">
                         <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                         <span>{term}</span>
@@ -157,19 +197,29 @@ const Promotions = () => {
                   </ul>
                 </div>
 
-                <div className="flex space-x-3">
+                <div className="flex space-x-3 mt-6">
                   <a
                     href={`https://wa.me/6285936562657?text=Halo%20Kak%20Sayuti%2C%20saya%20tertarik%20dengan%20promo%20${encodeURIComponent(promo.title)}.%20Bisa%20minta%20info%20lengkap%3F`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-semibold text-center transition-all duration-200 flex items-center justify-center space-x-2"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                   >
-                    <Phone className="w-4 h-4" />
-                    <span>Chat Sekarang</span>
+                    <Phone className="w-4 h-4 mr-2" />
+                    Hubungi Sekarang
                   </a>
-                  <button className="bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-3 rounded-lg font-medium transition-all duration-200">
-                    Detail
-                  </button>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Add to favorites logic
+                    }}
+                    className="inline-flex items-center justify-center px-4 py-3 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  >
+                    <svg className="w-4 h-4 mr-2 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                    </svg>
+                    Simpan
+                  </a>
                 </div>
               </div>
             </div>

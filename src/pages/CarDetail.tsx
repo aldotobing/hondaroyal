@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, Phone, Shield, Fuel, Users, Settings, Camera, CheckCircle, Star, Car, Share2 } from 'lucide-react';
-import { shareContent, updateMetaTags } from '../utils/shareUtils';
+import { shareContent } from '../utils/shareUtils';
 import { getCarById } from '../data/cars';
 import CarVariantSelector from '../components/CarVariantSelector';
 import SEO from '../components/SEO';
