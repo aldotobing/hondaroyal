@@ -29,10 +29,8 @@ const Promotions = () => {
       imageUrl = `${window.location.origin}/${cleanPath}`;
     }
     
-    // Create a simple but descriptive share text
-    const mainOffer = (promo.terms[0] || promo.description).replace(/\s+/g, ' ').trim();
-    // Keep it on one line to ensure it shows up in the share dialog
-    const shareText = `🔥 ${promo.title} • ${mainOffer} • ${promo.discount}`;
+    // Create a more detailed share text
+    const shareText = `${promo.title}\n\n${promo.description}\n\n${promo.terms.join('\n• ')}`;
     
     // Update meta tags for social sharing
     updateMetaTags(
