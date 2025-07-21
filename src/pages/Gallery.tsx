@@ -13,11 +13,13 @@ const Gallery = () => {
   const categories = ['all', ...Array.from(new Set(cars.map(car => car.category)))];
 
   // Flatten all images from all cars
+  import { Link } from 'react-router-dom';
   const allImages = cars.flatMap(car => 
     car.images.gallery.map((image, index) => ({
       url: image,
       carName: car.name,
       category: car.category,
+      carId: car.id, // Add carId here
       id: `${car.id}-${index}`
     }))
   );
@@ -43,7 +45,7 @@ const Gallery = () => {
     return () => {
       Object.values(compressedImages).forEach(url => URL.revokeObjectURL(url));
     };
-  }, [filteredImages]);
+  }, [filteredImages, compressedImages]);
 
   const openLightbox = (imageUrl: string) => {
     const index = filteredImages.findIndex(img => img.url === imageUrl);
@@ -105,7 +107,7 @@ const Gallery = () => {
 
         {/* Image Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredImages.map((image, index) => (
+          {filteredImages.map((image) => (
             <div
               key={image.id}
               className="group relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
@@ -118,12 +120,19 @@ const Gallery = () => {
               />
               
               {/* Overlay */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex flex-col items-center justify-center p-4">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center mb-4">
                   <Eye className="w-8 h-8 mx-auto mb-2" />
-                  <div className="text-sm font-medium">{image.carName}</div>
-                  <div className="text-xs opacity-80">{image.category}</div>
+                  <div className="text-lg font-bold mb-1">{image.carName}</div>
+                  <div className="text-sm opacity-80">{image.category}</div>
                 </div>
+                <Link
+                  to={`/katalog/${image.carId}`}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-4 py-2 bg-red-600 text-white rounded-full text-sm font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  onClick={(e) => e.stopPropagation()} // Prevent lightbox from opening
+                >
+                  Lihat Detail
+                </Link>
               </div>
 
               {/* Image Info */}
