@@ -39,8 +39,9 @@ const CarDetail = () => {
     
     const shareUrl = `${window.location.origin}${location.pathname}`;
     const shareText = `Lihat ${car.name} di Honda Royal - ${car.description.substring(0, 100)}...`;
+    const imageUrl = car.images.gallery[0];
     
-    await shareContent(car.name, shareText, shareUrl);
+    await shareContent(car.name, shareText, shareUrl, imageUrl);
   };
 
   
